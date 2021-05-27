@@ -22,6 +22,7 @@ public interface IResourceRetriever {
     TextureAtlas getSkeletonAtlas(String name);
     FileHandle getSkeletonJSON(String name);
     FileHandle getTalosVFX(String name);
+    FileHandle getSCMLFile(String name);
     TextureAtlas getSpriteAnimation(String name);
     BitmapFont getBitmapFont(String name, int size);
 

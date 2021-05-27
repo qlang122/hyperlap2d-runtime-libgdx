@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import games.rednblack.editor.renderer.box2dLight.RayHandler;
 import games.rednblack.editor.renderer.commons.IExternalItemType;
 import games.rednblack.editor.renderer.components.MainItemComponent;
@@ -28,6 +29,7 @@ public class EntityFactory {
     public static final int LIGHT_TYPE = 7;
     public static final int NINE_PATCH = 8;
     public static final int SPINE_TYPE = 9;
+    public static final int SPRITER_TYPE = 11;
     public static final int TALOS_TYPE = 10;
 
     protected ComponentFactory compositeComponentFactory, lightComponentFactory, particleEffectComponentFactory,
@@ -143,6 +145,19 @@ public class EntityFactory {
         Entity entity = engine.createEntity();
 
         ComponentFactory factory = externalFactories.get(SPINE_TYPE);
+        if (factory != null) {
+            factory.createComponents(root, entity, vo);
+            postProcessEntity(entity);
+        }
+
+        return entity;
+    }
+
+    public Entity createEntity(Entity root, SpriterVO vo) {
+
+        Entity entity = new Entity();
+
+        ComponentFactory factory = externalFactories.get(SPRITER_TYPE);
         if (factory != null) {
             factory.createComponents(root, entity, vo);
             postProcessEntity(entity);
@@ -270,6 +285,11 @@ public class EntityFactory {
 
         for (int i = 0; i < vo.sSpineAnimations.size(); i++) {
             Entity child = createEntity(entity, vo.sSpineAnimations.get(i));
+            engine.addEntity(child);
+        }
+
+        for (int i = 0; i < vo.sSpriterAnimations.size(); i++) {
+            Entity child = createEntity(entity, vo.sSpriterAnimations.get(i));
             engine.addEntity(child);
         }
 

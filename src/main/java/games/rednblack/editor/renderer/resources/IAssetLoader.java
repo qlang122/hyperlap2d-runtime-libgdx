@@ -9,6 +9,7 @@ public interface IAssetLoader {
     void loadParticleEffects();
     void loadSpriteAnimations();
     void loadSpineAnimations();
+    void loadSpriterAnimations();
     void loadFonts();
     void loadShaders();
 }
