@@ -59,13 +59,14 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     protected HashSet<String> shaderNamesToLoad = new HashSet<String>();
 
     protected TextureAtlas mainPack;
-    protected HashMap<String, ParticleEffect> particleEffects = new HashMap<String, ParticleEffect>();
-    protected HashMap<String, FileHandle> talosVFXs = new HashMap<String, FileHandle>();
+    protected HashMap<String, ParticleEffect> particleEffects = new HashMap<>();
+    protected HashMap<String, FileHandle> talosVFXs = new HashMap<>();
 
-    protected HashMap<String, TextureAtlas> skeletonAtlases = new HashMap<String, TextureAtlas>();
-    protected HashMap<String, FileHandle> skeletonJSON = new HashMap<String, FileHandle>();
+    protected HashMap<String, TextureAtlas> skeletonAtlases = new HashMap<>();
+    protected HashMap<String, FileHandle> skeletonJSON = new HashMap<>();
 
-    protected HashMap<String, FileHandle> spriterAnimations = new HashMap<String, FileHandle>();
+    protected HashMap<String, TextureAtlas> spriterAtlas = new HashMap<>();
+    protected HashMap<String, FileHandle> spriterSCML = new HashMap<>();
 
     protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<String, TextureAtlas>();
 
@@ -328,14 +329,16 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     @Override
     public void loadSpriterAnimations() {
         // empty existing ones that are not scheduled to load
-        for (String key : spriterAnimations.keySet()) {
+        for (String key : spriterSCML.keySet()) {
             if (!spriterAnimNamesToLoad.contains(key)) {
-                spriterAnimations.remove(key);
+                spriterSCML.remove(key);
             }
         }
         for (String name : spriterAnimNamesToLoad) {
+            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
+            spriterAtlas.put(name, animAtlas);
             FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
-            spriterAnimations.put(name, animFile);
+            spriterSCML.put(name, animFile);
         }
     }
 
@@ -453,8 +456,13 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     }
 
     @Override
-    public FileHandle getSCMLFile(String name) {
-        return spriterAnimations.get(name);
+    public FileHandle getSpriterSCML(String name) {
+        return spriterSCML.get(name);
+    }
+
+    @Override
+    public TextureAtlas getSpriterAtlas(String name) {
+        return spriterAtlas.get(name);
     }
 
     @Override
