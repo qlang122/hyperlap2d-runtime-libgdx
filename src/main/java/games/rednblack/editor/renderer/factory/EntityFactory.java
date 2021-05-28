@@ -141,7 +141,6 @@ public class EntityFactory {
     }
 
     public Entity createEntity(Entity root, SpineVO vo) {
-
         Entity entity = engine.createEntity();
 
         ComponentFactory factory = externalFactories.get(SPINE_TYPE);
@@ -149,12 +148,10 @@ public class EntityFactory {
             factory.createComponents(root, entity, vo);
             postProcessEntity(entity);
         }
-
         return entity;
     }
 
     public Entity createEntity(Entity root, SpriterVO vo) {
-
         Entity entity = new Entity();
 
         ComponentFactory factory = externalFactories.get(SPRITER_TYPE);
@@ -162,23 +159,19 @@ public class EntityFactory {
             factory.createComponents(root, entity, vo);
             postProcessEntity(entity);
         }
-
         return entity;
     }
 
     public Entity createEntity(Entity root, SpriteAnimationVO vo) {
-
         Entity entity = engine.createEntity();
 
         spriteComponentFactory.createComponents(root, entity, vo);
 
         postProcessEntity(entity);
-
         return entity;
     }
 
     public Entity createEntity(Entity root, CompositeItemVO vo) {
-
         Entity entity = engine.createEntity();
 
         compositeComponentFactory.createComponents(root, entity, vo);
@@ -189,7 +182,6 @@ public class EntityFactory {
     }
 
     public Entity createEntity(Entity root, ColorPrimitiveVO vo) {
-
         Entity entity = engine.createEntity();
 
         colorPrimitiveFactory.createComponents(root, entity, vo);
@@ -200,7 +192,6 @@ public class EntityFactory {
     }
 
     public Entity createRootEntity(CompositeVO compositeVo, Viewport viewport) {
-
         CompositeItemVO vo = new CompositeItemVO();
         vo.composite = compositeVo;
         vo.automaticResize = false;

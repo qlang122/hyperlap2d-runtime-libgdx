@@ -5,24 +5,20 @@ import com.badlogic.ashley.core.Entity;
 import games.rednblack.editor.renderer.components.SpriterDataComponent;
 
 public class SpriterVO extends MainItemVO {
-
-    public int 	entity;
-    public int 	animation;
     public String animationName = "";
 
-    //wtf is this?
-    public float scale	=	1f;
+    public int entity = 0;
+    public String currentAnimationName = "";
 
     public SpriterVO() {
 
     }
 
-    public SpriterVO( SpriterVO vo) {
+    public SpriterVO(SpriterVO vo) {
         super(vo);
-        entity 			= vo.entity;
-        animation		= vo.animation;
-        animationName 	= vo.animationName;
-        scale 			= vo.scale;
+        entity = vo.entity;
+        animationName = vo.animationName;
+        currentAnimationName = vo.currentAnimationName;
     }
 
     @Override
@@ -31,7 +27,6 @@ public class SpriterVO extends MainItemVO {
 
         SpriterDataComponent spriterComponent = entity.getComponent(SpriterDataComponent.class);
         animationName = spriterComponent.animationName;
-        animation = spriterComponent.animation;
+        currentAnimationName = spriterComponent.currentAnimationName;
     }
-
 }
