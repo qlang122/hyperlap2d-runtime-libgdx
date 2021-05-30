@@ -73,76 +73,52 @@ public class EntityFactory {
     }
 
     public Entity createEntity(Entity root, SimpleImageVO vo) {
-
         Entity entity = engine.createEntity();
-
         simpleImageComponentFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
-
         return entity;
     }
 
     public Entity createEntity(Entity root, Image9patchVO vo) {
-
         Entity entity = engine.createEntity();
-
         ninePatchComponentFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
-
         return entity;
     }
 
     public Entity createEntity(Entity root, LabelVO vo) {
-
         Entity entity = engine.createEntity();
-
         labelComponentFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
-
         return entity;
     }
 
     public Entity createEntity(Entity root, ParticleEffectVO vo) {
-
         Entity entity = engine.createEntity();
-
         particleEffectComponentFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
-
         return entity;
     }
 
     public Entity createEntity(Entity root, TalosVO vo) {
-
         Entity entity = engine.createEntity();
-
         ComponentFactory factory = externalFactories.get(TALOS_TYPE);
         if (factory != null) {
             factory.createComponents(root, entity, vo);
             postProcessEntity(entity);
         }
-
         return entity;
     }
 
     public Entity createEntity(Entity root, LightVO vo) {
-
         Entity entity = engine.createEntity();
-
         lightComponentFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
-
         return entity;
     }
 
     public Entity createEntity(Entity root, SpineVO vo) {
         Entity entity = engine.createEntity();
-
         ComponentFactory factory = externalFactories.get(SPINE_TYPE);
         if (factory != null) {
             factory.createComponents(root, entity, vo);
@@ -152,8 +128,7 @@ public class EntityFactory {
     }
 
     public Entity createEntity(Entity root, SpriterVO vo) {
-        Entity entity = new Entity();
-
+        Entity entity = engine.createEntity();
         ComponentFactory factory = externalFactories.get(SPRITER_TYPE);
         if (factory != null) {
             factory.createComponents(root, entity, vo);
@@ -164,30 +139,22 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, SpriteAnimationVO vo) {
         Entity entity = engine.createEntity();
-
         spriteComponentFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
         return entity;
     }
 
     public Entity createEntity(Entity root, CompositeItemVO vo) {
         Entity entity = engine.createEntity();
-
         compositeComponentFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
-
         return entity;
     }
 
     public Entity createEntity(Entity root, ColorPrimitiveVO vo) {
         Entity entity = engine.createEntity();
-
         colorPrimitiveFactory.createComponents(root, entity, vo);
-
         postProcessEntity(entity);
-
         return entity;
     }
 

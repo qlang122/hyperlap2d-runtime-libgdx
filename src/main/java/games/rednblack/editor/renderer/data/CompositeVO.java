@@ -25,10 +25,10 @@ public class CompositeVO {
     public ArrayList<LightVO> sLights = new ArrayList<>(1);
     public ArrayList<SpineVO> sSpineAnimations = new ArrayList<>(1);
     public ArrayList<SpriteAnimationVO> sSpriteAnimations = new ArrayList<>(1);
-    public ArrayList<SpriterVO> sSpriterAnimations = new ArrayList<SpriterVO>(1);
+    public ArrayList<SpriterVO> sSpriterAnimations = new ArrayList<>(1);
     public ArrayList<ColorPrimitiveVO> sColorPrimitives = new ArrayList<>(1);
 
-    public ArrayList<LayerItemVO> layers = new ArrayList<LayerItemVO>();
+    public ArrayList<LayerItemVO> layers = new ArrayList<>();
 
     public HashMap<String, StickyNoteVO> sStickyNotes = new HashMap<>(1);
 
@@ -37,9 +37,7 @@ public class CompositeVO {
     }
 
     public CompositeVO(CompositeVO vo) {
-
         if (vo == null) return;
-
         update(vo);
     }
 

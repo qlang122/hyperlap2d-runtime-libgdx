@@ -7,7 +7,7 @@ import games.rednblack.editor.renderer.components.SpriterDataComponent;
 public class SpriterVO extends MainItemVO {
     public String animationName = "";
 
-    public int entity = 0;
+    public int currentEntityIndex = 0;
     public String currentAnimationName = "";
 
     public SpriterVO() {
@@ -16,7 +16,7 @@ public class SpriterVO extends MainItemVO {
 
     public SpriterVO(SpriterVO vo) {
         super(vo);
-        entity = vo.entity;
+        currentEntityIndex = vo.currentEntityIndex;
         animationName = vo.animationName;
         currentAnimationName = vo.currentAnimationName;
     }
@@ -27,6 +27,7 @@ public class SpriterVO extends MainItemVO {
 
         SpriterDataComponent spriterComponent = entity.getComponent(SpriterDataComponent.class);
         animationName = spriterComponent.animationName;
+        currentEntityIndex = spriterComponent.currentEntityIndex;
         currentAnimationName = spriterComponent.currentAnimationName;
     }
 }
