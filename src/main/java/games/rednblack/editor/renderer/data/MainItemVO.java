@@ -143,4 +143,27 @@ public class MainItemVO {
             renderingLayer = shaderComponent.renderingLayer;
         }
     }
+
+    @Override
+    public String toString() {
+        return "MainItemVO{" +
+                "uniqueId=" + uniqueId +
+                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", tags=" + Arrays.toString(tags) +
+                ", customVars='" + customVars + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", scaleX=" + scaleX +
+                ", scaleY=" + scaleY +
+                ", originX=" + originX +
+                ", originY=" + originY +
+                ", rotation=" + rotation +
+                ", zIndex=" + zIndex +
+                ", layerName='" + layerName + '\'' +
+                ", tint=" + Arrays.toString(tint) +
+                ", flipX=" + flipX +
+                ", flipY=" + flipY +
+                '}';
+    }
 }

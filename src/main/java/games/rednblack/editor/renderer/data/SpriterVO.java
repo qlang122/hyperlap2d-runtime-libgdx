@@ -24,7 +24,7 @@ public class SpriterVO extends MainItemVO {
     @Override
     public void loadFromEntity(Entity entity) {
         super.loadFromEntity(entity);
-
+        System.out.println(super.toString());
         SpriterDataComponent spriterComponent = entity.getComponent(SpriterDataComponent.class);
         animationName = spriterComponent.animationName;
         currentEntityIndex = spriterComponent.currentEntityIndex;
