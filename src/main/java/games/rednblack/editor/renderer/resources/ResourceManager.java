@@ -37,6 +37,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     public String scenesPath = "scenes";
     public String particleEffectsPath = "particles";
     public String talosPath = "talos-vfx";
+    public String atlasPath = "atlas_images";
     public String spriteAnimationsPath = "sprite_animations";
     public String spineAnimationsPath = "spine_animations";
     public String spriterAnimationsPath = "spriter_animations";
@@ -242,6 +243,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
         loadParticleEffects();
         loadSpineAnimations();
         loadSpriteAnimations();
+        loadSpriterAnimations();
         loadFonts();
         loadShaders();
     }
@@ -249,6 +251,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     @Override
     public void loadAtlasPack() {
         FileHandle packFile = Gdx.files.internal(packResolutionName + File.separator + "pack.atlas");
+//        FileHandle atlasFilePath = Gdx.files.internal(packResolutionName + File.separator + atlasPath);
         if (!packFile.exists()) {
             return;
         }
