@@ -69,10 +69,10 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     protected HashMap<String, TextureAtlas> spriterAtlas = new HashMap<>();
     protected HashMap<String, FileHandle> spriterSCML = new HashMap<>();
 
-    protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<String, TextureAtlas>();
+    protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<>();
 
-    protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<FontSizePair, BitmapFont>();
-    protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<String, ShaderProgram>();
+    protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<>();
+    protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<>();
 
 
     /**
@@ -508,6 +508,9 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
             textureAtlas.dispose();
         }
         for (TextureAtlas textureAtlas : spriteAnimations.values()) {
+            textureAtlas.dispose();
+        }
+        for (TextureAtlas textureAtlas : spriterAtlas.values()) {
             textureAtlas.dispose();
         }
         for (BitmapFont font : bitmapFonts.values()) {
