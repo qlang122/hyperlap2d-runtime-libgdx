@@ -17,6 +17,7 @@ import java.util.HashSet;
 public class CompositeVO {
 
     public ArrayList<SimpleImageVO> sImages = new ArrayList<>(1);
+    public ArrayList<AtlasImageVO> sAtlasImages = new ArrayList<>(1);
     public ArrayList<Image9patchVO> sImage9patchs = new ArrayList<>(1);
     public ArrayList<LabelVO> sLabels = new ArrayList<>(1);
     public ArrayList<CompositeItemVO> sComposites = new ArrayList<>(1);
@@ -45,6 +46,9 @@ public class CompositeVO {
         clear();
         for (int i = 0; i < vo.sImages.size(); i++) {
             sImages.add(new SimpleImageVO(vo.sImages.get(i)));
+        }
+        for (int i = 0; i < vo.sAtlasImages.size(); i++) {
+            sAtlasImages.add(new AtlasImageVO(vo.sAtlasImages.get(i)));
         }
         for (int i = 0; i < vo.sImage9patchs.size(); i++) {
             sImage9patchs.add(new Image9patchVO(vo.sImage9patchs.get(i)));
@@ -97,6 +101,9 @@ public class CompositeVO {
         if (className.equals("SimpleImageVO")) {
             sImages.add((SimpleImageVO) vo);
         }
+        if (className.equals("AtlasImageVO")) {
+            sAtlasImages.add((AtlasImageVO) vo);
+        }
         if (className.equals("Image9patchVO")) {
             sImage9patchs.add((Image9patchVO) vo);
         }
@@ -134,6 +141,9 @@ public class CompositeVO {
         if (className.equals("SimpleImageVO")) {
             sImages.remove((SimpleImageVO) vo);
         }
+        if (className.equals("AtlasImageVO")) {
+            sAtlasImages.remove((AtlasImageVO) vo);
+        }
         if (className.equals("Image9patchVO")) {
             sImage9patchs.remove((Image9patchVO) vo);
         }
@@ -168,6 +178,7 @@ public class CompositeVO {
 
     public void clear() {
         sImages.clear();
+        sAtlasImages.clear();
         sLabels.clear();
         sComposites.clear();
         sParticleEffects.clear();
@@ -183,6 +194,7 @@ public class CompositeVO {
         return sComposites.isEmpty() &&
                 sImage9patchs.isEmpty() &&
                 sImages.isEmpty() &&
+                sAtlasImages.isEmpty() &&
                 sSpriteAnimations.isEmpty() &&
                 sLabels.isEmpty() &&
                 sLights.isEmpty() &&
@@ -215,6 +227,21 @@ public class CompositeVO {
         }
         for (CompositeItemVO sComposite : sComposites) {
             String[] additionalList = sComposite.composite.getRecursiveTalosList();
+            Collections.addAll(list, additionalList);
+        }
+        String[] finalList = new String[list.size()];
+        list.toArray(finalList);
+
+        return finalList;
+    }
+
+    public String[] getRecursiveAtlasImagesList() {
+        HashSet<String> list = new HashSet<String>();
+        for (AtlasImageVO vo : sAtlasImages) {
+            list.add(vo.imageName);
+        }
+        for (CompositeItemVO sComposite : sComposites) {
+            String[] additionalList = sComposite.composite.getRecursiveAtlasImagesList();
             Collections.addAll(list, additionalList);
         }
         String[] finalList = new String[list.size()];
@@ -309,6 +336,9 @@ public class CompositeVO {
         for (MainItemVO vo : compositeVo.sImages) {
             itemsList.add(vo);
         }
+        for (MainItemVO vo : compositeVo.sAtlasImages) {
+            itemsList.add(vo);
+        }
         for (MainItemVO vo : compositeVo.sLabels) {
             itemsList.add(vo);
         }
@@ -358,6 +388,11 @@ public class CompositeVO {
                 SimpleImageVO vo = new SimpleImageVO();
                 vo.loadFromEntity(entity);
                 sImages.add(vo);
+            }
+            if (entityType == EntityFactory.ATLAS_IMAGE_TYPE) {
+                AtlasImageVO vo = new AtlasImageVO();
+                vo.loadFromEntity(entity);
+                sAtlasImages.add(vo);
             }
             if (entityType == EntityFactory.NINE_PATCH) {
                 Image9patchVO vo = new Image9patchVO();

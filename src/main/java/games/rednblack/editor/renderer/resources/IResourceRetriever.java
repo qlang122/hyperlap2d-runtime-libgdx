@@ -19,6 +19,8 @@ public interface IResourceRetriever {
 
     TextureRegion getTextureRegion(String name);
 
+    TextureRegion getAtlasImagesTextureRegion(String name);
+
     boolean hasTextureRegion(String name);
 
     ParticleEffect getParticleEffect(String name);

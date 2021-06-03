@@ -53,6 +53,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
     protected HashSet<String> particleEffectNamesToLoad = new HashSet<String>();
     protected HashSet<String> talosNamesToLoad = new HashSet<String>();
+    protected HashSet<String> atlasImageNamesToLoad = new HashSet<String>();
     protected HashSet<String> spineAnimNamesToLoad = new HashSet<String>();
     protected HashSet<String> spriteAnimNamesToLoad = new HashSet<String>();
     protected HashSet<String> spriterAnimNamesToLoad = new HashSet<String>();
@@ -60,6 +61,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     protected HashSet<String> shaderNamesToLoad = new HashSet<String>();
 
     protected TextureAtlas mainPack;
+    protected HashMap<String, TextureAtlas> imagesAtlas = new HashMap<>();
+
     protected HashMap<String, ParticleEffect> particleEffects = new HashMap<>();
     protected HashMap<String, FileHandle> talosVFXs = new HashMap<>();
 
@@ -180,6 +183,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
             //
             String[] particleEffects = composite.getRecursiveParticleEffectsList();
             String[] talosVFXs = composite.getRecursiveTalosList();
+            String[] atlasImages = composite.getRecursiveAtlasImagesList();
             String[] spineAnimations = composite.getRecursiveSpineAnimationList();
             String[] spriteAnimations = composite.getRecursiveSpriteAnimationList();
             String[] spriterAnimations = composite.getRecursiveSpriterAnimationList();
@@ -199,6 +203,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
             //
             Collections.addAll(particleEffectNamesToLoad, particleEffects);
             Collections.addAll(talosNamesToLoad, talosVFXs);
+            Collections.addAll(atlasImageNamesToLoad, atlasImages);
             Collections.addAll(spineAnimNamesToLoad, spineAnimations);
             Collections.addAll(spriteAnimNamesToLoad, spriteAnimations);
             Collections.addAll(spriterAnimNamesToLoad, spriterAnimations);
@@ -240,6 +245,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
      */
     public void loadAssets() {
         loadAtlasPack();
+        loadAtlasImages();
         loadParticleEffects();
         loadSpineAnimations();
         loadSpriteAnimations();
@@ -256,6 +262,14 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
             return;
         }
         mainPack = new TextureAtlas(packFile);
+    }
+
+    @Override
+    public void loadAtlasImages() {
+        for (String name : atlasImageNamesToLoad) {
+            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + atlasPath + File.separator + name + ".atlas"));
+            imagesAtlas.put(name, animAtlas);
+        }
     }
 
     @Override
@@ -436,6 +450,15 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     @Override
     public TextureRegion getTextureRegion(String name) {
         return mainPack.findRegion(name);
+    }
+
+    @Override
+    public TextureRegion getAtlasImagesTextureRegion(String name) {
+        for (Map.Entry<String, TextureAtlas> entry : imagesAtlas.entrySet()) {
+            TextureAtlas.AtlasRegion region = entry.getValue().findRegion(name);
+            if (region != null) return region;
+        }
+        return null;
     }
 
     @Override

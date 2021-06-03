@@ -29,11 +29,12 @@ public class EntityFactory {
     public static final int LIGHT_TYPE = 7;
     public static final int NINE_PATCH = 8;
     public static final int SPINE_TYPE = 9;
-    public static final int SPRITER_TYPE = 11;
     public static final int TALOS_TYPE = 10;
+    public static final int SPRITER_TYPE = 11;
+    public static final int ATLAS_IMAGE_TYPE = 12;
 
     protected ComponentFactory compositeComponentFactory, lightComponentFactory, particleEffectComponentFactory,
-            simpleImageComponentFactory, spriteComponentFactory, labelComponentFactory,
+            simpleImageComponentFactory, atlasImageComponentFactory, spriteComponentFactory, labelComponentFactory,
             ninePatchComponentFactory, colorPrimitiveFactory;
 
     private final HashMap<Integer, ComponentFactory> externalFactories = new HashMap<>();
@@ -54,6 +55,7 @@ public class EntityFactory {
         lightComponentFactory = new LightComponentFactory(engine, rayHandler, world, rm);
         particleEffectComponentFactory = new ParticleEffectComponentFactory(engine, rayHandler, world, rm);
         simpleImageComponentFactory = new SimpleImageComponentFactory(engine, rayHandler, world, rm);
+        atlasImageComponentFactory = new AtlasImageComponentFactory(engine, rayHandler, world, rm);
         spriteComponentFactory = new SpriteComponentFactory(engine, rayHandler, world, rm);
         labelComponentFactory = new LabelComponentFactory(engine, rayHandler, world, rm);
         ninePatchComponentFactory = new NinePatchComponentFactory(engine, rayHandler, world, rm);
@@ -75,6 +77,13 @@ public class EntityFactory {
     public Entity createEntity(Entity root, SimpleImageVO vo) {
         Entity entity = engine.createEntity();
         simpleImageComponentFactory.createComponents(root, entity, vo);
+        postProcessEntity(entity);
+        return entity;
+    }
+
+    public Entity createEntity(Entity root, AtlasImageVO vo) {
+        Entity entity = engine.createEntity();
+        atlasImageComponentFactory.createComponents(root, entity, vo);
         postProcessEntity(entity);
         return entity;
     }
@@ -213,6 +222,11 @@ public class EntityFactory {
     public void initAllChildren(Engine engine, Entity entity, CompositeVO vo) {
         for (int i = 0; i < vo.sImages.size(); i++) {
             Entity child = createEntity(entity, vo.sImages.get(i));
+            engine.addEntity(child);
+        }
+
+        for (int i = 0; i < vo.sAtlasImages.size(); i++) {
+            Entity child = createEntity(entity, vo.sAtlasImages.get(i));
             engine.addEntity(child);
         }
 

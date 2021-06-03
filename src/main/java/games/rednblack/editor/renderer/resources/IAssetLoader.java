@@ -6,6 +6,7 @@ package games.rednblack.editor.renderer.resources;
  */
 public interface IAssetLoader {
     void loadAtlasPack();
+    void loadAtlasImages();
     void loadParticleEffects();
     void loadSpriteAnimations();
     void loadSpineAnimations();
