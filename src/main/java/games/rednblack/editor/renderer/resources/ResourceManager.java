@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 
@@ -527,6 +528,9 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     @Override
     public void dispose() {
         mainPack.dispose();
+        for (TextureAtlas textureAtlas : imagesAtlas.values()) {
+            textureAtlas.dispose();
+        }
         for (TextureAtlas textureAtlas : skeletonAtlases.values()) {
             textureAtlas.dispose();
         }

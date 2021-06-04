@@ -35,7 +35,7 @@ public class EntityFactory {
 
     protected ComponentFactory compositeComponentFactory, lightComponentFactory, particleEffectComponentFactory,
             simpleImageComponentFactory, atlasImageComponentFactory, spriteComponentFactory, labelComponentFactory,
-            ninePatchComponentFactory, colorPrimitiveFactory;
+            ninePatchComponentFactory, ninePatchAtlasComponentFactory, colorPrimitiveFactory;
 
     private final HashMap<Integer, ComponentFactory> externalFactories = new HashMap<>();
     private final HashMap<Integer, Entity> entities = new HashMap<>();
@@ -59,6 +59,7 @@ public class EntityFactory {
         spriteComponentFactory = new SpriteComponentFactory(engine, rayHandler, world, rm);
         labelComponentFactory = new LabelComponentFactory(engine, rayHandler, world, rm);
         ninePatchComponentFactory = new NinePatchComponentFactory(engine, rayHandler, world, rm);
+        ninePatchAtlasComponentFactory = new NinePatchAtlasComponentFactory(engine, rayHandler, world, rm);
         colorPrimitiveFactory = new ColorPrimitiveComponentFactory(engine, rayHandler, world, rm);
     }
 
@@ -91,6 +92,13 @@ public class EntityFactory {
     public Entity createEntity(Entity root, Image9patchVO vo) {
         Entity entity = engine.createEntity();
         ninePatchComponentFactory.createComponents(root, entity, vo);
+        postProcessEntity(entity);
+        return entity;
+    }
+
+    public Entity createEntityAtlas9Patch(Entity root, Image9patchVO vo) {
+        Entity entity = engine.createEntity();
+        ninePatchAtlasComponentFactory.createComponents(root, entity, vo);
         postProcessEntity(entity);
         return entity;
     }
