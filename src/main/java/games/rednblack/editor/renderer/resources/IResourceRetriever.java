@@ -19,7 +19,7 @@ public interface IResourceRetriever {
 
     TextureRegion getTextureRegion(String name);
 
-    TextureRegion getAtlasImagesTextureRegion(String name);
+    TextureRegion getAtlasImagesTextureRegion(String atlasName, String name);
 
     boolean hasTextureRegion(String name);
 

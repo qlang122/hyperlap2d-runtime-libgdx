@@ -83,15 +83,16 @@ public class AtlasImageComponentFactory extends ComponentFactory {
 
     protected TextureRegionComponent createTextureRegionComponent(Entity entity, AtlasImageVO vo) {
         TextureRegionComponent component = engine.createComponent(TextureRegionComponent.class);
+        component.textureAtlasName = vo.atlasName;
         component.regionName = vo.imageName;
-        component.region = rm.getAtlasImagesTextureRegion(vo.imageName);
+        component.region = rm.getAtlasImagesTextureRegion(vo.atlasName, vo.imageName);
         component.isRepeat = vo.isRepeat;
         component.isPolygon = vo.isPolygon;
         entity.add(component);
 
         if (rm.hasTextureRegion(vo.imageName + ".normal")) {
             NormalTextureRegionComponent normalComponent = engine.createComponent(NormalTextureRegionComponent.class);
-            normalComponent.textureRegion = rm.getAtlasImagesTextureRegion(vo.imageName + ".normal");
+            normalComponent.textureRegion = rm.getAtlasImagesTextureRegion(vo.atlasName, vo.imageName + ".normal");
             entity.add(normalComponent);
             entity.add(engine.createComponent(NormalMapRendering.class));
         }

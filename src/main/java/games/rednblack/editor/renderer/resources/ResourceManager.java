@@ -454,10 +454,15 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     }
 
     @Override
-    public TextureRegion getAtlasImagesTextureRegion(String name) {
-        for (Map.Entry<String, TextureAtlas> entry : imagesAtlas.entrySet()) {
-            TextureAtlas.AtlasRegion region = entry.getValue().findRegion(name);
-            if (region != null) return region;
+    public TextureRegion getAtlasImagesTextureRegion(String atlasName, String name) {
+        if (!atlasName.isEmpty() && imagesAtlas.containsKey(atlasName)) {
+            TextureAtlas textureAtlas = imagesAtlas.get(atlasName);
+            return textureAtlas.findRegion(name);
+        } else {
+            for (Map.Entry<String, TextureAtlas> entry : imagesAtlas.entrySet()) {
+                TextureAtlas.AtlasRegion region = entry.getValue().findRegion(name);
+                if (region != null) return region;
+            }
         }
         return null;
     }

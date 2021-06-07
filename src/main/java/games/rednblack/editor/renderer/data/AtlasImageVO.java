@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import games.rednblack.editor.renderer.components.TextureRegionComponent;
 
 public class AtlasImageVO extends MainItemVO {
+    public String atlasName = "";
     public String imageName = "";
     public boolean isRepeat = false;
     public boolean isPolygon = false;
@@ -15,6 +16,7 @@ public class AtlasImageVO extends MainItemVO {
 
     public AtlasImageVO(AtlasImageVO vo) {
         super(vo);
+        atlasName = vo.atlasName;
         imageName = vo.imageName;
         isRepeat = vo.isRepeat;
         isPolygon = vo.isPolygon;
@@ -25,10 +27,8 @@ public class AtlasImageVO extends MainItemVO {
         super.loadFromEntity(entity);
 
         TextureRegionComponent textureRegionComponent = entity.getComponent(TextureRegionComponent.class);
-        loadFromComponent(textureRegionComponent);
-    }
 
-    public void loadFromComponent(TextureRegionComponent textureRegionComponent) {
+        atlasName = textureRegionComponent.textureAtlasName;
         imageName = textureRegionComponent.regionName;
         isRepeat = textureRegionComponent.isRepeat;
         isPolygon = textureRegionComponent.isPolygon;

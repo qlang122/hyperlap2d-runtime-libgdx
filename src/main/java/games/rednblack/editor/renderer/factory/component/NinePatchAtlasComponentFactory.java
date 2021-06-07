@@ -51,7 +51,7 @@ public class NinePatchAtlasComponentFactory extends ComponentFactory {
 
     private NinePatchComponent createNinePatchComponent(Entity entity, Image9patchVO vo) {
         NinePatchComponent ninePatchComponent = engine.createComponent(NinePatchComponent.class);
-        AtlasRegion atlasRegion = (AtlasRegion) rm.getAtlasImagesTextureRegion(vo.imageName);
+        AtlasRegion atlasRegion = (AtlasRegion) rm.getAtlasImagesTextureRegion(vo.atlasName, vo.imageName);
         int[] splits = atlasRegion.findValue("split");
         if (splits == null) {
             splits = new int[]{0, 0, 0, 0};
@@ -64,6 +64,7 @@ public class NinePatchAtlasComponentFactory extends ComponentFactory {
 
         ninePatchComponent.ninePatch.scale(multiplier / projectInfoVO.pixelToWorld, multiplier / projectInfoVO.pixelToWorld);
 
+        ninePatchComponent.textureAtlasName = vo.atlasName;
         ninePatchComponent.textureRegionName = vo.imageName;
         entity.add(ninePatchComponent);
 
