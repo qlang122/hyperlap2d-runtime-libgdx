@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import games.rednblack.editor.renderer.data.ProjectInfoVO;
 
 import java.io.File;
@@ -40,8 +41,10 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<AsyncResource
         FileHandle packFile = Gdx.files.internal(this.asyncResourceManager.packResolutionName + File.separator + "pack.atlas");
         TextureAtlas textureAtlas = manager.get(packFile.path(), TextureAtlas.class);
         this.asyncResourceManager.setMainPack(textureAtlas);
+        this.asyncResourceManager.loadAtlasImages(manager);
         this.asyncResourceManager.loadSpineAnimations(manager);
         this.asyncResourceManager.loadSpriteAnimations(manager);
+        this.asyncResourceManager.loadSpriterAnimations(manager);
         this.asyncResourceManager.loadParticleEffects(manager);
         this.asyncResourceManager.loadFonts();
         this.asyncResourceManager.loadShaders();
@@ -67,6 +70,9 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<AsyncResource
 
         //Prepare additional assets not included in any scenes
         if (parameter != null) {
+            for (String name : parameter.atlasImages) {
+                this.asyncResourceManager.prepareAtlasImage(name);
+            }
             for (String name : parameter.particleEffects) {
                 this.asyncResourceManager.prepareParticleEffect(name);
             }
@@ -78,6 +84,9 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<AsyncResource
             }
             for (String name : parameter.spriteAnims) {
                 this.asyncResourceManager.prepareSprite(name);
+            }
+            for (String name : parameter.spriterAnims) {
+                this.asyncResourceManager.prepareSpriter(name);
             }
             for (FontSizePair name : parameter.fonts) {
                 this.asyncResourceManager.prepareFont(name);
@@ -95,6 +104,11 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<AsyncResource
             deps.add(new AssetDescriptor(packFile, TextureAtlas.class));
         }
 
+        for (String name : this.asyncResourceManager.getAtlasImageNamesToLoad()) {
+            FileHandle res = Gdx.files.internal(this.asyncResourceManager.packResolutionName + File.separator + this.asyncResourceManager.atlasImagesPath + File.separator + name + ".atlas");
+            deps.add(new AssetDescriptor(res, TextureAtlas.class));
+        }
+
         for (String name : this.asyncResourceManager.getSpineAnimNamesToLoad()) {
             FileHandle res = Gdx.files.internal(this.asyncResourceManager.packResolutionName + File.separator + this.asyncResourceManager.spineAnimationsPath + File.separator + name + File.separator + name + ".atlas");
             deps.add(new AssetDescriptor(res, TextureAtlas.class));
@@ -102,6 +116,11 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<AsyncResource
 
         for (String name : this.asyncResourceManager.getSpriteAnimNamesToLoad()) {
             FileHandle res = Gdx.files.internal(this.asyncResourceManager.packResolutionName + File.separator + this.asyncResourceManager.spriteAnimationsPath + File.separator + name + File.separator + name + ".atlas");
+            deps.add(new AssetDescriptor(res, TextureAtlas.class));
+        }
+
+        for (String name : this.asyncResourceManager.getSpriterAnimNamesToLoad()) {
+            FileHandle res = Gdx.files.internal(this.asyncResourceManager.packResolutionName + File.separator + this.asyncResourceManager.spriterAnimationsPath + File.separator + name + File.separator + name + ".atlas");
             deps.add(new AssetDescriptor(res, TextureAtlas.class));
         }
 
@@ -116,8 +135,10 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<AsyncResource
     }
 
     public static class AsyncResourceManagerParam extends AssetLoaderParameters<AsyncResourceManager> {
+        public final Array<String> atlasImages = new Array<String>();
         public final Array<String> spineAnims = new Array<String>();
         public final Array<String> spriteAnims = new Array<String>();
+        public final Array<String> spriterAnims = new Array<String>();
         public final Array<String> particleEffects = new Array<String>();
         public final Array<String> talosVFXs = new Array<String>();
         public final Array<FontSizePair> fonts = new Array<FontSizePair>();

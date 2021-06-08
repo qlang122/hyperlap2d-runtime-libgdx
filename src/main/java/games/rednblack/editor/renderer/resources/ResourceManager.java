@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 
@@ -38,7 +37,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     public String scenesPath = "scenes";
     public String particleEffectsPath = "particles";
     public String talosPath = "talos-vfx";
-    public String atlasPath = "atlas_images";
+    public String atlasImagesPath = "atlas_images";
     public String spriteAnimationsPath = "sprite_animations";
     public String spineAnimationsPath = "spine_animations";
     public String spriterAnimationsPath = "spriter_animations";
@@ -62,7 +61,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     protected HashSet<String> shaderNamesToLoad = new HashSet<String>();
 
     protected TextureAtlas mainPack;
-    protected HashMap<String, TextureAtlas> imagesAtlas = new HashMap<>();
+    protected HashMap<String, TextureAtlas> atlasImagesAtlas = new HashMap<>();
 
     protected HashMap<String, ParticleEffect> particleEffects = new HashMap<>();
     protected HashMap<String, FileHandle> talosVFXs = new HashMap<>();
@@ -168,6 +167,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
      * removes all the duplicates, and makes list of assets that are only needed.
      */
     public void prepareAssetsToLoad() {
+        atlasImageNamesToLoad.clear();
         particleEffectNamesToLoad.clear();
         talosNamesToLoad.clear();
         spineAnimNamesToLoad.clear();
@@ -213,9 +213,14 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
         }
     }
 
+    public void prepareAtlasImage(String name) {
+        atlasImageNamesToLoad.add(name);
+    }
+
     /*
         Prepare additional assets
      */
+
     public void prepareParticleEffect(String name) {
         particleEffectNamesToLoad.add(name);
     }
@@ -230,6 +235,10 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
     public void prepareSprite(String name) {
         spriteAnimNamesToLoad.add(name);
+    }
+
+    public void prepareSpriter(String name) {
+        spriterAnimNamesToLoad.add(name);
     }
 
     public void prepareFont(FontSizePair name) {
@@ -258,7 +267,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     @Override
     public void loadAtlasPack() {
         FileHandle packFile = Gdx.files.internal(packResolutionName + File.separator + "pack.atlas");
-//        FileHandle atlasFilePath = Gdx.files.internal(packResolutionName + File.separator + atlasPath);
         if (!packFile.exists()) {
             return;
         }
@@ -267,9 +275,15 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
     @Override
     public void loadAtlasImages() {
+        for (String key : atlasImagesAtlas.keySet()) {
+            if (!atlasImageNamesToLoad.contains(key)) {
+                atlasImagesAtlas.remove(key);
+            }
+        }
+
         for (String name : atlasImageNamesToLoad) {
-            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + atlasPath + File.separator + name + ".atlas"));
-            imagesAtlas.put(name, animAtlas);
+            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + atlasImagesPath + File.separator + name + ".atlas"));
+            atlasImagesAtlas.put(name, animAtlas);
         }
     }
 
@@ -455,11 +469,11 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
     @Override
     public TextureRegion getAtlasImagesTextureRegion(String atlasName, String name) {
-        if (!atlasName.isEmpty() && imagesAtlas.containsKey(atlasName)) {
-            TextureAtlas textureAtlas = imagesAtlas.get(atlasName);
+        if (!atlasName.isEmpty() && atlasImagesAtlas.containsKey(atlasName)) {
+            TextureAtlas textureAtlas = atlasImagesAtlas.get(atlasName);
             return textureAtlas.findRegion(name);
         } else {
-            for (Map.Entry<String, TextureAtlas> entry : imagesAtlas.entrySet()) {
+            for (Map.Entry<String, TextureAtlas> entry : atlasImagesAtlas.entrySet()) {
                 TextureAtlas.AtlasRegion region = entry.getValue().findRegion(name);
                 if (region != null) return region;
             }
@@ -533,7 +547,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     @Override
     public void dispose() {
         mainPack.dispose();
-        for (TextureAtlas textureAtlas : imagesAtlas.values()) {
+        for (TextureAtlas textureAtlas : atlasImagesAtlas.values()) {
             textureAtlas.dispose();
         }
         for (TextureAtlas textureAtlas : skeletonAtlases.values()) {

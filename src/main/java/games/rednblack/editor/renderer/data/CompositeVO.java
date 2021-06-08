@@ -238,7 +238,7 @@ public class CompositeVO {
     public String[] getRecursiveAtlasImagesList() {
         HashSet<String> list = new HashSet<String>();
         for (AtlasImageVO vo : sAtlasImages) {
-            list.add(vo.imageName);
+            list.add(vo.atlasName);
         }
         for (CompositeItemVO sComposite : sComposites) {
             String[] additionalList = sComposite.composite.getRecursiveAtlasImagesList();

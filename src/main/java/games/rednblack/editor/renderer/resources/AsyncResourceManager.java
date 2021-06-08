@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import games.rednblack.editor.renderer.data.ProjectInfoVO;
 
 import java.io.File;
@@ -24,17 +25,31 @@ public class AsyncResourceManager extends ResourceManager {
         this.projectVO = vo;
     }
 
-    public HashSet<String> getSpineAnimNamesToLoad() {
-        return this.spineAnimNamesToLoad;
-    }
-
     public void setMainPack(TextureAtlas mainPack) {
         this.mainPack = mainPack;
     }
 
-    /**
-     * Spine Animations
-     */
+    @Override
+    public void loadAtlasImages() {
+        throw new GdxRuntimeException("see loadAtlasImages(AssetManager)");
+    }
+
+    public HashSet<String> getAtlasImageNamesToLoad() {
+        return this.atlasImageNamesToLoad;
+    }
+
+    public void loadAtlasImages(AssetManager manager) {
+        for (String key : atlasImagesAtlas.keySet()) {
+            if (!atlasImageNamesToLoad.contains(key)) {
+                atlasImagesAtlas.remove(key);
+            }
+        }
+
+        for (String name : atlasImageNamesToLoad) {
+            FileHandle fileHandle = Gdx.files.internal(packResolutionName + File.separator + atlasImagesPath + File.separator + name + ".atlas");
+            atlasImagesAtlas.put(name, manager.get(fileHandle.path(), TextureAtlas.class));
+        }
+    }
 
     @Override
     public void loadSpineAnimations() {
@@ -44,6 +59,10 @@ public class AsyncResourceManager extends ResourceManager {
     @Override
     public void loadSpineAnimation(String name) {
         throw new GdxRuntimeException("see loadSpineAnimation(AssetManager, String)");
+    }
+
+    public HashSet<String> getSpineAnimNamesToLoad() {
+        return this.spineAnimNamesToLoad;
     }
 
     public void loadSpineAnimations(AssetManager manager) {
@@ -97,9 +116,28 @@ public class AsyncResourceManager extends ResourceManager {
         }
     }
 
-    /**
-     * Particle Effect
-     */
+    @Override
+    public void loadSpriterAnimations() {
+        throw new GdxRuntimeException("see loadSpriterAnimations(AssetManager)");
+    }
+
+    public HashSet<String> getSpriterAnimNamesToLoad() {
+        return this.spriterAnimNamesToLoad;
+    }
+
+    public void loadSpriterAnimations(AssetManager manager) {
+        for (String key : spriterSCML.keySet()) {
+            if (!spriterAnimNamesToLoad.contains(key)) {
+                spriterSCML.remove(key);
+            }
+        }
+        for (String name : spriterAnimNamesToLoad) {
+            FileHandle fileHandle = Gdx.files.internal(packResolutionName + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".atlas");
+            spriterAtlas.put(name, manager.get(fileHandle.path(), TextureAtlas.class));
+            FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
+            spriterSCML.put(name, animFile);
+        }
+    }
 
     @Override
     public void loadParticleEffects() {
