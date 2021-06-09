@@ -68,14 +68,16 @@ public class AtlasImageComponentFactory extends ComponentFactory {
     protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
         DimensionsComponent component = engine.createComponent(DimensionsComponent.class);
 
-        TextureRegionComponent textureRegionComponent = ComponentRetriever.get(entity, TextureRegionComponent.class);
+        TextureRegionComponent regionComponent = ComponentRetriever.get(entity, TextureRegionComponent.class);
 
         ResolutionEntryVO resolutionEntryVO = rm.getLoadedResolution();
         ProjectInfoVO projectInfoVO = rm.getProjectVO();
         float multiplier = resolutionEntryVO.getMultiplier(rm.getProjectVO().originalResolution);
 
-        component.width = (float) textureRegionComponent.region.getRegionWidth() * multiplier / projectInfoVO.pixelToWorld;
-        component.height = (float) textureRegionComponent.region.getRegionHeight() * multiplier / projectInfoVO.pixelToWorld;
+        if (regionComponent.region != null) {
+            component.width = (float) regionComponent.region.getRegionWidth() * multiplier / projectInfoVO.pixelToWorld;
+            component.height = (float) regionComponent.region.getRegionHeight() * multiplier / projectInfoVO.pixelToWorld;
+        }
         entity.add(component);
 
         return component;

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+
 import games.rednblack.editor.renderer.components.*;
 import games.rednblack.editor.renderer.components.normal.NormalTextureRegionComponent;
 import games.rednblack.editor.renderer.data.MainItemVO;
@@ -51,7 +52,7 @@ public class TextureRegionDrawLogic implements Drawable {
         batch.setColor(batchColor);
     }
 
-    public void drawRepeatablePolygonSprite (Batch batch, Entity entity, float parentAlpha) {
+    public void drawRepeatablePolygonSprite(Batch batch, Entity entity, float parentAlpha) {
         TintComponent tintComponent = tintComponentComponentMapper.get(entity);
         TextureRegionComponent textureRegionComponent = textureRegionMapper.get(entity);
         TransformComponent entityTransformComponent = transformMapper.get(entity);
@@ -91,6 +92,8 @@ public class TextureRegionDrawLogic implements Drawable {
             region = normalComponent.textureRegion;
         else
             region = entityTextureRegionComponent.region;
+
+        if (region == null) return;
 
         batch.draw(region,
                 entityTransformComponent.x, entityTransformComponent.y,
