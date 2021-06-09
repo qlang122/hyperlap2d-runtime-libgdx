@@ -400,8 +400,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     }
 
     public void loadFont(FontSizePair pair) {
-        FileHandle fontFile;
-        fontFile = Gdx.files.internal(fontsPath + File.separator + pair.fontName + ".ttf");
+        System.out.println("------>" + pair);
+        FileHandle fontFile = Gdx.files.internal(fontsPath + File.separator + pair.fontName + ".ttf");
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = Math.round(pair.fontSize * resMultiplier);
