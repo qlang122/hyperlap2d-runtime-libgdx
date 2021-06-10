@@ -50,6 +50,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     public String fontsPath = "freetypefonts";
     public String shadersPath = "shaders";
 
+    public final String DEFAULT_FONT = "default-font-cn.fnt";
+
     protected float resMultiplier;
 
     protected ProjectInfoVO projectVO;
@@ -415,7 +417,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
             return;
         }
 
-        FileHandle fontFile = Gdx.files.internal(fontsPath + File.separator + URLEncoder.encode(pair.fontName, "utf-8") + ".ttf");
+        String name = URLEncoder.encode(new String(pair.fontName.getBytes(), "utf-8"), "utf-8");
+        FileHandle fontFile = Gdx.files.internal(fontsPath + File.separator + name + ".ttf");
 
         FileHandle txtFile = Gdx.files.internal(fontsPath + File.separator + "gbk-chars.txt");
         InputStream read = txtFile.read();
@@ -434,7 +437,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = Math.round(pair.fontSize * resMultiplier);//make 32 size temp font.
+        parameter.size = Math.round(pair.fontSize * resMultiplier);
         parameter.characters = charsTxt;
         parameter.gamma = 4.0f;
         parameter.renderCount = 3;
@@ -449,10 +452,10 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     }
 
     private void loadInternalFont(int size) {
-        ShadedDistanceFieldFont font = new ShadedDistanceFieldFont(Gdx.files.internal(fontsPath + File.separator + "font_cn.fnt"));
+        ShadedDistanceFieldFont font = new ShadedDistanceFieldFont(Gdx.files.internal(fontsPath + File.separator + DEFAULT_FONT));
         font.setDistanceFieldSmoothing(1.5f);
-        font.getData().setScale(Math.round(size / font.getCapHeight()));
-        bitmapFonts.put(new FontSizePair("Internal", 20), font);
+        font.getData().setScale(size / font.getCapHeight());
+        bitmapFonts.put(new FontSizePair("Internal", size), font);
     }
 
     @Override
