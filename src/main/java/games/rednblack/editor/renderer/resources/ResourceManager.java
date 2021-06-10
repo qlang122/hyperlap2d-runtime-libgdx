@@ -1,6 +1,11 @@
 package games.rednblack.editor.renderer.resources;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.util.*;
 
 import com.badlogic.gdx.Gdx;
@@ -16,6 +21,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 
 import games.rednblack.editor.renderer.data.*;
+import games.rednblack.editor.renderer.utils.ShadedDistanceFieldFont;
 
 /**
  * Default ResourceManager that you can reuse or extend
@@ -395,20 +401,58 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
         }
 
         for (FontSizePair pair : fontsToLoad) {
-            loadFont(pair);
+            try {
+                loadFont(pair);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void loadFont(FontSizePair pair) {
-        System.out.println("------>" + pair);
-        FileHandle fontFile = Gdx.files.internal(fontsPath + File.separator + pair.fontName + ".ttf");
+    public void loadFont(FontSizePair pair) throws IOException {
+        if ("Internal".equals(pair.fontName)) {
+            loadInternalFont(pair.fontSize);
+            return;
+        }
+
+        FileHandle fontFile = Gdx.files.internal(fontsPath + File.separator + URLEncoder.encode(pair.fontName, "utf-8") + ".ttf");
+
+        FileHandle txtFile = Gdx.files.internal(fontsPath + File.separator + "gbk-chars.txt");
+        InputStream read = txtFile.read();
+        StringBuffer buffer = new StringBuffer();
+        InputStreamReader in = new InputStreamReader(read);
+        BufferedReader reader = new BufferedReader(in, 1024);
+        String tempStr;
+        while ((tempStr = reader.readLine()) != null) {
+            buffer.append(tempStr);
+        }
+        reader.close();
+        in.close();
+        read.close();
+
+        String charsTxt = new String(buffer.toString().getBytes(), "utf-8");
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = Math.round(pair.fontSize * resMultiplier);
+        parameter.size = Math.round(pair.fontSize * resMultiplier);//make 32 size temp font.
+        parameter.characters = charsTxt;
+        parameter.gamma = 4.0f;
+        parameter.renderCount = 3;
+        parameter.minFilter = Texture.TextureFilter.Linear;
+        parameter.magFilter = Texture.TextureFilter.Linear;
         BitmapFont font = generator.generateFont(parameter);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         font.setUseIntegerPositions(false);
+        generator.dispose();
+
         bitmapFonts.put(pair, font);
+    }
+
+    private void loadInternalFont(int size) {
+        ShadedDistanceFieldFont font = new ShadedDistanceFieldFont(Gdx.files.internal(fontsPath + File.separator + "font_cn.fnt"));
+        font.setDistanceFieldSmoothing(1.5f);
+        font.getData().setScale(Math.round(size / font.getCapHeight()));
+        bitmapFonts.put(new FontSizePair("Internal", 20), font);
     }
 
     @Override

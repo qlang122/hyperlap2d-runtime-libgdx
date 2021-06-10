@@ -27,12 +27,15 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 
-/** Renders bitmap fonts using distance field textures, see the <a
+/**
+ * Renders bitmap fonts using distance field textures, see the <a
  * href="https://github.com/libgdx/libgdx/wiki/Distance-field-fonts">Distance Field Fonts wiki article</a> for usage. Initialize
  * the SpriteBatch with the {@link #createDistanceFieldShader()} shader.
  * <p>
  * Attention: The batch is flushed before and after each string is rendered.
- * @author Florian Falkner */
+ *
+ * @author Florian Falkner
+ */
 public class ShadedDistanceFieldFont extends BitmapFont {
     private float distanceFieldSmoothing;
     private ShaderProgram distanceShader;
@@ -41,39 +44,39 @@ public class ShadedDistanceFieldFont extends BitmapFont {
         super();
     }
 
-    public ShadedDistanceFieldFont (BitmapFontData data, Array<TextureRegion> pageRegions, boolean integer) {
+    public ShadedDistanceFieldFont(BitmapFontData data, Array<TextureRegion> pageRegions, boolean integer) {
         super(data, pageRegions, integer);
     }
 
-    public ShadedDistanceFieldFont (BitmapFontData data, TextureRegion region, boolean integer) {
+    public ShadedDistanceFieldFont(BitmapFontData data, TextureRegion region, boolean integer) {
         super(data, region, integer);
     }
 
-    public ShadedDistanceFieldFont (FileHandle fontFile, boolean flip) {
+    public ShadedDistanceFieldFont(FileHandle fontFile, boolean flip) {
         super(fontFile, flip);
     }
 
-    public ShadedDistanceFieldFont (FileHandle fontFile, FileHandle imageFile, boolean flip, boolean integer) {
+    public ShadedDistanceFieldFont(FileHandle fontFile, FileHandle imageFile, boolean flip, boolean integer) {
         super(fontFile, imageFile, flip, integer);
     }
 
-    public ShadedDistanceFieldFont (FileHandle fontFile, FileHandle imageFile, boolean flip) {
+    public ShadedDistanceFieldFont(FileHandle fontFile, FileHandle imageFile, boolean flip) {
         super(fontFile, imageFile, flip);
     }
 
-    public ShadedDistanceFieldFont (FileHandle fontFile, TextureRegion region, boolean flip) {
+    public ShadedDistanceFieldFont(FileHandle fontFile, TextureRegion region, boolean flip) {
         super(fontFile, region, flip);
     }
 
-    public ShadedDistanceFieldFont (FileHandle fontFile, TextureRegion region) {
+    public ShadedDistanceFieldFont(FileHandle fontFile, TextureRegion region) {
         super(fontFile, region);
     }
 
-    public ShadedDistanceFieldFont (FileHandle fontFile) {
+    public ShadedDistanceFieldFont(FileHandle fontFile) {
         super(fontFile);
     }
 
-    protected void load (BitmapFontData data) {
+    protected void load(BitmapFontData data) {
         super.load(data);
 
         // Distance field font rendering requires font texture to be filtered linear.
@@ -83,25 +86,41 @@ public class ShadedDistanceFieldFont extends BitmapFont {
         setUseIntegerPositions(false);
     }
 
+    public void load(BitmapFontData src, BitmapFontData target) {
+        if (target == null) target = getData();
+        for (Glyph[] page : src.glyphs) {
+            if (page == null) continue;
+            for (Glyph glyph : page) {
+                if (glyph != null) target.setGlyphRegion(glyph, getRegions().get(glyph.page));
+            }
+        }
+        if (src.missingGlyph != null)
+            target.setGlyphRegion(src.missingGlyph, getRegions().get(src.missingGlyph.page));
+    }
+
     @Override
-    public BitmapFontCache newFontCache () {
+    public BitmapFontCache newFontCache() {
         if (distanceShader == null)
             distanceShader = createDistanceFieldShader();
         return new DistanceFieldFontCache(this, distanceShader);
     }
 
-    /** @return The distance field smoothing factor for this font. */
-    public float getDistanceFieldSmoothing () {
+    /**
+     * @return The distance field smoothing factor for this font.
+     */
+    public float getDistanceFieldSmoothing() {
         return distanceFieldSmoothing;
     }
 
-    /** @param distanceFieldSmoothing Set the distance field smoothing factor for this font. SpriteBatch needs to have this shader
-     *           set for rendering distance field fonts. */
-    public void setDistanceFieldSmoothing (float distanceFieldSmoothing) {
+    /**
+     * @param distanceFieldSmoothing Set the distance field smoothing factor for this font. SpriteBatch needs to have this shader
+     *                               set for rendering distance field fonts.
+     */
+    public void setDistanceFieldSmoothing(float distanceFieldSmoothing) {
         this.distanceFieldSmoothing = distanceFieldSmoothing;
     }
 
-    static public ShaderProgram createDistanceFieldShader () {
+    static public ShaderProgram createDistanceFieldShader() {
         String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
                 + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
                 + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
@@ -139,34 +158,37 @@ public class ShadedDistanceFieldFont extends BitmapFont {
         return shader;
     }
 
-    /** Provides a font cache that uses distance field shader for rendering fonts. Attention: breaks batching because uniform is
+    /**
+     * Provides a font cache that uses distance field shader for rendering fonts. Attention: breaks batching because uniform is
      * needed for smoothing factor, so a flush is performed before and after every font rendering.
-     * @author Florian Falkner */
+     *
+     * @author Florian Falkner
+     */
     static private class DistanceFieldFontCache extends BitmapFontCache {
         ShaderProgram distanceShader;
 
-        public DistanceFieldFontCache (ShadedDistanceFieldFont font, ShaderProgram distanceShader) {
+        public DistanceFieldFontCache(ShadedDistanceFieldFont font, ShaderProgram distanceShader) {
             super(font, font.usesIntegerPositions());
             this.distanceShader = distanceShader;
         }
 
-        public DistanceFieldFontCache (ShadedDistanceFieldFont font, boolean integer, ShaderProgram distanceShader) {
+        public DistanceFieldFontCache(ShadedDistanceFieldFont font, boolean integer, ShaderProgram distanceShader) {
             super(font, integer);
             this.distanceShader = distanceShader;
         }
 
-        private float getSmoothingFactor () {
-            final ShadedDistanceFieldFont font = (ShadedDistanceFieldFont)super.getFont();
+        private float getSmoothingFactor() {
+            final ShadedDistanceFieldFont font = (ShadedDistanceFieldFont) super.getFont();
             return font.getDistanceFieldSmoothing() * font.getScaleX();
         }
 
-        private void setSmoothingUniform (Batch batch, float smoothing) {
+        private void setSmoothingUniform(Batch batch, float smoothing) {
             batch.flush();
             distanceShader.setUniformf("u_smoothing", smoothing);
         }
 
         @Override
-        public void draw (Batch spriteBatch) {
+        public void draw(Batch spriteBatch) {
             ShaderProgram oldShader = spriteBatch.getShader();
             spriteBatch.setShader(distanceShader);
             setSmoothingUniform(spriteBatch, getSmoothingFactor());
@@ -176,7 +198,7 @@ public class ShadedDistanceFieldFont extends BitmapFont {
         }
 
         @Override
-        public void draw (Batch spriteBatch, int start, int end) {
+        public void draw(Batch spriteBatch, int start, int end) {
             ShaderProgram oldShader = spriteBatch.getShader();
             spriteBatch.setShader(distanceShader);
             setSmoothingUniform(spriteBatch, getSmoothingFactor());
