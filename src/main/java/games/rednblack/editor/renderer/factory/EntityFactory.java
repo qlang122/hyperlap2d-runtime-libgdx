@@ -90,6 +90,9 @@ public class EntityFactory {
     }
 
     public Entity createEntity(Entity root, Image9patchVO vo) {
+        if (!vo.atlasName.isEmpty()) {
+            return createEntityAtlas9Patch(root, vo);
+        }
         Entity entity = engine.createEntity();
         ninePatchComponentFactory.createComponents(root, entity, vo);
         postProcessEntity(entity);
