@@ -8,7 +8,8 @@ import games.rednblack.editor.renderer.data.SceneVO;
  */
 public interface IDataLoader {
 
-    public SceneVO loadSceneVO(String sceneName);
-    public ProjectInfoVO loadProjectVO();
+    SceneVO loadSceneVO(String sceneName);
+
+    ProjectInfoVO loadProjectVO();
 
 }

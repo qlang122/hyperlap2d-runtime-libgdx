@@ -381,7 +381,10 @@ public class HyperLap2dRenderer extends IteratingSystem {
             return;
         } else if (renderingType == Drawable.RenderingType.NORMAL_MAP && normalMapMapper.has(child))
             hasNormals = true;
-        int entityType = mainItemComponentMapper.get(child).entityType;
+        MainItemComponent mainItemComponent = mainItemComponentMapper.get(child);
+        int entityType = mainItemComponent.entityType;
+        boolean visible = mainItemComponent.visible;
+        if (!visible) return;
 
         applyShader(child, batch);
         //Find the logic from mapper and draw it

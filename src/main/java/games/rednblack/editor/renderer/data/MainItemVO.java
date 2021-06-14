@@ -29,6 +29,7 @@ public class MainItemVO {
     public float[] tint = {1, 1, 1, 1};
     public boolean flipX = false;
     public boolean flipY = false;
+    public boolean visible = true;
 
     public String shaderName = "";
     public HashMap<String, ShaderUniformVO> shaderUniforms = new HashMap<>();
@@ -60,6 +61,7 @@ public class MainItemVO {
         originY = vo.originY;
         flipX = vo.flipX;
         flipY = vo.flipY;
+        visible = vo.visible;
 
         if (vo.shape != null) {
             shape = vo.shape.clone();
@@ -93,6 +95,7 @@ public class MainItemVO {
         tags = new String[mainItemComponent.tags.size()];
         tags = mainItemComponent.tags.toArray(tags);
         customVars = mainItemComponent.getCustomVarString();
+        visible = mainItemComponent.visible;
 
         x = transformComponent.x;
         y = transformComponent.y;
@@ -164,6 +167,13 @@ public class MainItemVO {
                 ", tint=" + Arrays.toString(tint) +
                 ", flipX=" + flipX +
                 ", flipY=" + flipY +
+                ", visible=" + visible +
+                ", shaderName='" + shaderName + '\'' +
+                ", shaderUniforms=" + shaderUniforms +
+                ", renderingLayer=" + renderingLayer +
+                ", shape=" + shape +
+                ", physics=" + physics +
+                ", light=" + light +
                 '}';
     }
 }

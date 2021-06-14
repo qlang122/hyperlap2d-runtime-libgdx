@@ -8,6 +8,7 @@ import games.rednblack.editor.renderer.components.DimensionsComponent;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CompositeItemVO extends MainItemVO {
 
@@ -77,5 +78,41 @@ public class CompositeItemVO extends MainItemVO {
 		for(MainItemVO subItem: items) {
 			subItem.uniqueId = -1;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "CompositeItemVO{" +
+				"composite=" + composite +
+				", width=" + width +
+				", height=" + height +
+				", automaticResize=" + automaticResize +
+				", scissorsEnabled=" + scissorsEnabled +
+				", renderToFBO=" + renderToFBO +
+				", uniqueId=" + uniqueId +
+				", itemIdentifier='" + itemIdentifier + '\'' +
+				", itemName='" + itemName + '\'' +
+				", tags=" + Arrays.toString(tags) +
+				", customVars='" + customVars + '\'' +
+				", x=" + x +
+				", y=" + y +
+				", scaleX=" + scaleX +
+				", scaleY=" + scaleY +
+				", originX=" + originX +
+				", originY=" + originY +
+				", rotation=" + rotation +
+				", zIndex=" + zIndex +
+				", layerName='" + layerName + '\'' +
+				", tint=" + Arrays.toString(tint) +
+				", flipX=" + flipX +
+				", flipY=" + flipY +
+				", visible=" + visible +
+				", shaderName='" + shaderName + '\'' +
+				", shaderUniforms=" + shaderUniforms +
+				", renderingLayer=" + renderingLayer +
+				", shape=" + shape +
+				", physics=" + physics +
+				", light=" + light +
+				'}';
 	}
 }

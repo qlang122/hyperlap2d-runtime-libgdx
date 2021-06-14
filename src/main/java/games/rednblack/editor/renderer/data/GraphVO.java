@@ -7,4 +7,14 @@ public class GraphVO {
     public ArrayList<GraphNodeVO> nodes = new ArrayList<>();
     public ArrayList<GraphConnectionVO> connections = new ArrayList<>();
     public ArrayList<GraphGroupVO> groups = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "GraphVO{" +
+                "version=" + version +
+                ", nodes=" + nodes +
+                ", connections=" + connections +
+                ", groups=" + groups +
+                '}';
+    }
 }

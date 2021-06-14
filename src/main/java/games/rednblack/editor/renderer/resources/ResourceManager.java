@@ -423,7 +423,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
         FileHandle txtFile = Gdx.files.internal(fontsPath + File.separator + "gbk-chars.txt");
         InputStream read = txtFile.read();
         StringBuffer buffer = new StringBuffer();
-        InputStreamReader in = new InputStreamReader(read);
+        InputStreamReader in = new InputStreamReader(read, "utf-8");
         BufferedReader reader = new BufferedReader(in, 1024);
         String tempStr;
         while ((tempStr = reader.readLine()) != null) {
@@ -462,7 +462,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     public SceneVO loadSceneVO(String sceneName) {
         FileHandle file = Gdx.files.internal(scenesPath + File.separator + sceneName + ".dt");
         Json json = new Json();
-        SceneVO sceneVO = json.fromJson(SceneVO.class, file.readString());
+        SceneVO sceneVO = json.fromJson(SceneVO.class, file.readString("utf-8"));
 
         loadedSceneVOs.put(sceneName, sceneVO);
 

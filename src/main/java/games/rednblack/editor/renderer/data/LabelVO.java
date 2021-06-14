@@ -2,6 +2,8 @@ package games.rednblack.editor.renderer.data;
 
 import com.badlogic.ashley.core.Entity;
 
+import java.util.Arrays;
+
 import games.rednblack.editor.renderer.components.DimensionsComponent;
 import games.rednblack.editor.renderer.components.label.LabelComponent;
 import games.rednblack.editor.renderer.components.label.TypingLabelComponent;
@@ -52,5 +54,43 @@ public class LabelVO extends MainItemVO {
 
         width = dimensionsComponent.width;
         height = dimensionsComponent.height;
+    }
+
+    @Override
+    public String toString() {
+        return "LabelVO{" +
+                "text='" + text + '\'' +
+                ", style='" + style + '\'' +
+                ", size=" + size +
+                ", align=" + align +
+                ", width=" + width +
+                ", height=" + height +
+                ", wrap=" + wrap +
+                ", isTyping=" + isTyping +
+                ", uniqueId=" + uniqueId +
+                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", tags=" + Arrays.toString(tags) +
+                ", customVars='" + customVars + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", scaleX=" + scaleX +
+                ", scaleY=" + scaleY +
+                ", originX=" + originX +
+                ", originY=" + originY +
+                ", rotation=" + rotation +
+                ", zIndex=" + zIndex +
+                ", layerName='" + layerName + '\'' +
+                ", tint=" + Arrays.toString(tint) +
+                ", flipX=" + flipX +
+                ", flipY=" + flipY +
+                ", visible=" + visible +
+                ", shaderName='" + shaderName + '\'' +
+                ", shaderUniforms=" + shaderUniforms +
+                ", renderingLayer=" + renderingLayer +
+                ", shape=" + shape +
+                ", physics=" + physics +
+                ", light=" + light +
+                '}';
     }
 }

@@ -2,6 +2,8 @@ package games.rednblack.editor.renderer.data;
 
 import com.badlogic.ashley.core.Entity;
 
+import java.util.Arrays;
+
 import games.rednblack.editor.renderer.components.TextureRegionComponent;
 
 public class SimpleImageVO extends MainItemVO {
@@ -32,5 +34,38 @@ public class SimpleImageVO extends MainItemVO {
         imageName = textureRegionComponent.regionName;
         isRepeat = textureRegionComponent.isRepeat;
         isPolygon = textureRegionComponent.isPolygon;
+    }
+
+    @Override
+    public String toString() {
+        return "SimpleImageVO{" +
+                "imageName='" + imageName + '\'' +
+                ", isRepeat=" + isRepeat +
+                ", isPolygon=" + isPolygon +
+                ", uniqueId=" + uniqueId +
+                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", tags=" + Arrays.toString(tags) +
+                ", customVars='" + customVars + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", scaleX=" + scaleX +
+                ", scaleY=" + scaleY +
+                ", originX=" + originX +
+                ", originY=" + originY +
+                ", rotation=" + rotation +
+                ", zIndex=" + zIndex +
+                ", layerName='" + layerName + '\'' +
+                ", tint=" + Arrays.toString(tint) +
+                ", flipX=" + flipX +
+                ", flipY=" + flipY +
+                ", visible=" + visible +
+                ", shaderName='" + shaderName + '\'' +
+                ", shaderUniforms=" + shaderUniforms +
+                ", renderingLayer=" + renderingLayer +
+                ", shape=" + shape +
+                ", physics=" + physics +
+                ", light=" + light +
+                '}';
     }
 }

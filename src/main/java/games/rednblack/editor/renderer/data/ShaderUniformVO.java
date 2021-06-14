@@ -55,4 +55,16 @@ public class ShaderUniformVO {
             throw new IllegalArgumentException("Cannot modify Uniform type once assigned.");
         return newType;
     }
+
+    @Override
+    public String toString() {
+        return "ShaderUniformVO{" +
+                "type='" + type + '\'' +
+                ", intValue=" + intValue +
+                ", floatValue=" + floatValue +
+                ", floatValue2=" + floatValue2 +
+                ", floatValue3=" + floatValue3 +
+                ", floatValue4=" + floatValue4 +
+                '}';
+    }
 }

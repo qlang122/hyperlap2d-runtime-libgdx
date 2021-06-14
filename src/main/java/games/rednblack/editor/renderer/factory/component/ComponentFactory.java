@@ -102,6 +102,7 @@ public abstract class ComponentFactory {
         component.uniqueId = vo.uniqueId;
         component.itemIdentifier = vo.itemIdentifier;
         component.libraryLink = vo.itemName;
+        component.visible = vo.visible;
         if (vo.tags != null) {
             component.tags = new HashSet<>(Arrays.asList(vo.tags));
         }

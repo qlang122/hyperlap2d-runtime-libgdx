@@ -21,6 +21,7 @@ package games.rednblack.editor.renderer.utils;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+
 import games.rednblack.editor.renderer.components.MainItemComponent;
 import games.rednblack.editor.renderer.components.NodeComponent;
 import games.rednblack.editor.renderer.components.ParentNodeComponent;
@@ -29,6 +30,7 @@ import games.rednblack.editor.renderer.scripts.IScript;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Created by azakhary on 7/8/2015.
@@ -48,7 +50,7 @@ public class ItemWrapper {
     public ItemWrapper(Entity entity) {
         this.entity = entity;
         nodeComponent = ComponentRetriever.get(entity, NodeComponent.class);
-        if(nodeComponent != null) {
+        if (nodeComponent != null) {
             for (Entity child : nodeComponent.children) {
                 mapEntity(child);
             }
@@ -73,7 +75,7 @@ public class ItemWrapper {
 
     public ItemWrapper getChild(String id) {
         Entity entity = childrenMap.get(id);
-        if(entity == null) return new ItemWrapper();
+        if (entity == null) return new ItemWrapper();
 
         return new ItemWrapper(entity);
     }
@@ -90,7 +92,7 @@ public class ItemWrapper {
     }
 
     public ItemWrapper addChild(Entity child) {
-        if(nodeComponent != null) {
+        if (nodeComponent != null) {
             ParentNodeComponent parentNodeComponent = ComponentRetriever.get(child, ParentNodeComponent.class);
             if (parentNodeComponent.parentEntity != null) {
                 //Remove child from its parent
@@ -103,7 +105,7 @@ public class ItemWrapper {
 
             mapEntity(child);
 
-            return  new ItemWrapper(child);
+            return new ItemWrapper(child);
         }
 
         return new ItemWrapper();
@@ -120,7 +122,7 @@ public class ItemWrapper {
 
     public IScript addScript(IScript script, PooledEngine engine) {
         ScriptComponent component = ComponentRetriever.get(entity, ScriptComponent.class);
-        if(component == null) {
+        if (component == null) {
             component = engine.createComponent(ScriptComponent.class);
             entity.add(component);
         }

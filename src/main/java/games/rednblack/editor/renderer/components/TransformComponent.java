@@ -17,6 +17,7 @@ public class TransformComponent implements BaseComponent {
     public float originY;
     public boolean flipX = false;
     public boolean flipY = false;
+    public boolean isXYScaleLinked = true;
 
     private TransformComponent backup = null;
 
@@ -89,6 +90,7 @@ public class TransformComponent implements BaseComponent {
         originY = 0;
         flipX = false;
         flipY = false;
+        isXYScaleLinked = true;
 
         worldTransform.idt();
         computedTransform.idt();

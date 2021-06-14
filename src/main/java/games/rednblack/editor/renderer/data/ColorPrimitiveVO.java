@@ -18,6 +18,8 @@
 
 package games.rednblack.editor.renderer.data;
 
+import java.util.Arrays;
+
 /**
  * Created by azakhary on 10/21/2015.
  */
@@ -29,5 +31,35 @@ public class ColorPrimitiveVO extends MainItemVO {
 
     public ColorPrimitiveVO(ColorPrimitiveVO vo) {
         super(vo);
+    }
+
+    @Override
+    public String toString() {
+        return "ColorPrimitiveVO{" +
+                "uniqueId=" + uniqueId +
+                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", tags=" + Arrays.toString(tags) +
+                ", customVars='" + customVars + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", scaleX=" + scaleX +
+                ", scaleY=" + scaleY +
+                ", originX=" + originX +
+                ", originY=" + originY +
+                ", rotation=" + rotation +
+                ", zIndex=" + zIndex +
+                ", layerName='" + layerName + '\'' +
+                ", tint=" + Arrays.toString(tint) +
+                ", flipX=" + flipX +
+                ", flipY=" + flipY +
+                ", visible=" + visible +
+                ", shaderName='" + shaderName + '\'' +
+                ", shaderUniforms=" + shaderUniforms +
+                ", renderingLayer=" + renderingLayer +
+                ", shape=" + shape +
+                ", physics=" + physics +
+                ", light=" + light +
+                '}';
     }
 }

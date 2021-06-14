@@ -24,7 +24,7 @@ public class StickyNoteVO {
         this.x = noteVO.x;
         this.y = noteVO.y;
         this.id = noteVO.id;
-        if(noteVO.tint != null) tint = Arrays.copyOf(noteVO.tint, noteVO.tint.length);
+        if (noteVO.tint != null) tint = Arrays.copyOf(noteVO.tint, noteVO.tint.length);
     }
 
     @Override
@@ -44,5 +44,18 @@ public class StickyNoteVO {
     @Override
     public int hashCode() {
         return Objects.hash(id, x, y, width, height, content);
+    }
+
+    @Override
+    public String toString() {
+        return "StickyNoteVO{" +
+                "id='" + id + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", width=" + width +
+                ", height=" + height +
+                ", content='" + content + '\'' +
+                ", tint=" + Arrays.toString(tint) +
+                '}';
     }
 }

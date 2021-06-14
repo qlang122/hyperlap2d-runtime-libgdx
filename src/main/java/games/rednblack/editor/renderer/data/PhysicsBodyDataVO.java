@@ -1,6 +1,7 @@
 package games.rednblack.editor.renderer.data;
 
 import com.badlogic.gdx.math.Vector2;
+
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
 
 import java.util.Objects;
@@ -9,15 +10,15 @@ public class PhysicsBodyDataVO {
 
     public int bodyType = 0;
 
-	public float mass;
-	public Vector2 centerOfMass;
-	public float rotationalInertia;
-	public float damping;
+    public float mass;
+    public Vector2 centerOfMass;
+    public float rotationalInertia;
+    public float damping;
     public float angularDamping;
-	public float gravityScale;
-	public boolean allowSleep;
-	public boolean awake;
-	public boolean bullet;
+    public float gravityScale;
+    public boolean allowSleep;
+    public boolean awake;
+    public boolean bullet;
     public boolean sensor;
     public boolean fixedRotation;
 
@@ -27,22 +28,22 @@ public class PhysicsBodyDataVO {
 
     public float height;
 
-    public PhysicsBodyDataVO(){
-    	centerOfMass = new Vector2();
+    public PhysicsBodyDataVO() {
+        centerOfMass = new Vector2();
     }
-    
-    public PhysicsBodyDataVO(PhysicsBodyDataVO vo){
-    	bodyType = vo.bodyType;
-    	mass = vo.mass;
-    	centerOfMass = vo.centerOfMass.cpy();
-    	rotationalInertia = vo.rotationalInertia;
-    	damping = vo.damping;
+
+    public PhysicsBodyDataVO(PhysicsBodyDataVO vo) {
+        bodyType = vo.bodyType;
+        mass = vo.mass;
+        centerOfMass = vo.centerOfMass.cpy();
+        rotationalInertia = vo.rotationalInertia;
+        damping = vo.damping;
         angularDamping = vo.angularDamping;
-    	gravityScale = vo.gravityScale;
-    	allowSleep = vo.allowSleep;
+        gravityScale = vo.gravityScale;
+        allowSleep = vo.allowSleep;
         sensor = vo.sensor;
-    	awake = vo.awake;
-    	bullet = vo.bullet;
+        awake = vo.awake;
+        bullet = vo.bullet;
         density = vo.density;
         friction = vo.friction;
         restitution = vo.restitution;
@@ -95,5 +96,27 @@ public class PhysicsBodyDataVO {
     @Override
     public int hashCode() {
         return Objects.hash(bodyType, mass, centerOfMass, rotationalInertia, damping, angularDamping, gravityScale, allowSleep, awake, bullet, fixedRotation, sensor, density, friction, restitution, height);
+    }
+
+    @Override
+    public String toString() {
+        return "PhysicsBodyDataVO{" +
+                "bodyType=" + bodyType +
+                ", mass=" + mass +
+                ", centerOfMass=" + centerOfMass +
+                ", rotationalInertia=" + rotationalInertia +
+                ", damping=" + damping +
+                ", angularDamping=" + angularDamping +
+                ", gravityScale=" + gravityScale +
+                ", allowSleep=" + allowSleep +
+                ", awake=" + awake +
+                ", bullet=" + bullet +
+                ", sensor=" + sensor +
+                ", fixedRotation=" + fixedRotation +
+                ", density=" + density +
+                ", friction=" + friction +
+                ", restitution=" + restitution +
+                ", height=" + height +
+                '}';
     }
 }

@@ -2,6 +2,8 @@ package games.rednblack.editor.renderer.data;
 
 import com.badlogic.ashley.core.Entity;
 
+import java.util.Arrays;
+
 import games.rednblack.editor.renderer.components.SpriterDataComponent;
 
 public class SpriterVO extends MainItemVO {
@@ -42,5 +44,40 @@ public class SpriterVO extends MainItemVO {
         isLooping = spriterComponent.isLooping;
         currentEntityIndex = spriterComponent.currentEntityIndex;
         currentAnimationName = spriterComponent.currentAnimationName;
+    }
+
+    @Override
+    public String toString() {
+        return "SpriterVO{" +
+                "animationName='" + animationName + '\'' +
+                ", isLooping=" + isLooping +
+                ", currentEntityIndex=" + currentEntityIndex +
+                ", currentAnimationName='" + currentAnimationName + '\'' +
+                ", actionName='" + actionName + '\'' +
+                ", uniqueId=" + uniqueId +
+                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", tags=" + Arrays.toString(tags) +
+                ", customVars='" + customVars + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", scaleX=" + scaleX +
+                ", scaleY=" + scaleY +
+                ", originX=" + originX +
+                ", originY=" + originY +
+                ", rotation=" + rotation +
+                ", zIndex=" + zIndex +
+                ", layerName='" + layerName + '\'' +
+                ", tint=" + Arrays.toString(tint) +
+                ", flipX=" + flipX +
+                ", flipY=" + flipY +
+                ", visible=" + visible +
+                ", shaderName='" + shaderName + '\'' +
+                ", shaderUniforms=" + shaderUniforms +
+                ", renderingLayer=" + renderingLayer +
+                ", shape=" + shape +
+                ", physics=" + physics +
+                ", light=" + light +
+                '}';
     }
 }

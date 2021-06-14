@@ -36,4 +36,16 @@ public class ProjectInfoVO {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "ProjectInfoVO{" +
+                "pixelToWorld=" + pixelToWorld +
+                ", originalResolution=" + originalResolution +
+                ", resolutions=" + resolutions +
+                ", scenes=" + scenes +
+                ", libraryItems=" + libraryItems +
+                ", libraryActions=" + libraryActions +
+                '}';
+    }
 }

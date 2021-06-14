@@ -21,7 +21,7 @@ public class LightBodyDataVO {
         color = new float[]{1f, 1f, 1f, 1f};
     }
 
-    public LightBodyDataVO(LightBodyDataVO vo){
+    public LightBodyDataVO(LightBodyDataVO vo) {
         color = new float[4];
         System.arraycopy(vo.color, 0, this.color, 0, color.length);
         rays = vo.rays;
@@ -64,5 +64,21 @@ public class LightBodyDataVO {
         int result = Objects.hash(rays, distance, rayDirection, softnessLength, isStatic, isXRay, isSoft, isActive, intensity);
         result = 31 * result + Arrays.hashCode(color);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LightBodyDataVO{" +
+                "color=" + Arrays.toString(color) +
+                ", rays=" + rays +
+                ", distance=" + distance +
+                ", intensity=" + intensity +
+                ", rayDirection=" + rayDirection +
+                ", softnessLength=" + softnessLength +
+                ", isStatic=" + isStatic +
+                ", isXRay=" + isXRay +
+                ", isSoft=" + isSoft +
+                ", isActive=" + isActive +
+                '}';
     }
 }

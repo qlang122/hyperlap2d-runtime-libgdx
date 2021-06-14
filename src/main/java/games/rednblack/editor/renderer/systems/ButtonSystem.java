@@ -38,12 +38,44 @@ public class ButtonSystem extends IteratingSystem {
             return;
         }
 
-
         for (int i = 0; i < nodeComponent.children.size; i++) {
             Entity childEntity = nodeComponent.children.get(i);
             MainItemComponent childMainItemComponent = ComponentRetriever.get(childEntity, MainItemComponent.class);
             ZIndexComponent childZComponent = ComponentRetriever.get(childEntity, ZIndexComponent.class);
-            if (isTouched(entity)) {
+            ButtonComponent buttonComponent = ComponentRetriever.get(entity, ButtonComponent.class);
+            if (!buttonComponent.isEnable) {
+                if (childZComponent.layerName.equals("checked")) {
+                    childMainItemComponent.visible = false;
+                }
+                if (childZComponent.layerName.equals("disable")) {
+                    childMainItemComponent.visible = true;
+                }
+                if (childZComponent.layerName.equals("normal")) {
+                    childMainItemComponent.visible = false;
+                }
+                if (childZComponent.layerName.equals("pressed")) {
+                    childMainItemComponent.visible = false;
+                }
+            } else if (buttonComponent.isChecked) {
+                if (childZComponent.layerName.equals("checked")) {
+                    childMainItemComponent.visible = true;
+                }
+                if (childZComponent.layerName.equals("disable")) {
+                    childMainItemComponent.visible = false;
+                }
+                if (childZComponent.layerName.equals("normal")) {
+                    childMainItemComponent.visible = false;
+                }
+                if (childZComponent.layerName.equals("pressed")) {
+                    childMainItemComponent.visible = false;
+                }
+            } else if (isTouched(entity, buttonComponent)) {
+                if (childZComponent.layerName.equals("checked")) {
+                    childMainItemComponent.visible = false;
+                }
+                if (childZComponent.layerName.equals("disable")) {
+                    childMainItemComponent.visible = false;
+                }
                 if (childZComponent.layerName.equals("normal")) {
                     childMainItemComponent.visible = false;
                 }
@@ -51,6 +83,12 @@ public class ButtonSystem extends IteratingSystem {
                     childMainItemComponent.visible = true;
                 }
             } else {
+                if (childZComponent.layerName.equals("checked")) {
+                    childMainItemComponent.visible = false;
+                }
+                if (childZComponent.layerName.equals("disable")) {
+                    childMainItemComponent.visible = false;
+                }
                 if (childZComponent.layerName.equals("normal")) {
                     childMainItemComponent.visible = true;
                 }
@@ -62,8 +100,7 @@ public class ButtonSystem extends IteratingSystem {
 
     }
 
-    private boolean isTouched(Entity entity) {
-        ButtonComponent buttonComponent = ComponentRetriever.get(entity, ButtonComponent.class);
+    private boolean isTouched(Entity entity, ButtonComponent buttonComponent) {
         if (Gdx.input.isTouched()) {
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
             Vector2 localCoordinates = new Vector2(Gdx.input.getX(), Gdx.input.getY());

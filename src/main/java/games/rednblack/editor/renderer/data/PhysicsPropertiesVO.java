@@ -22,4 +22,14 @@ public class PhysicsPropertiesVO {
         this.sleepVelocity = physicsPropertiesVO.sleepVelocity;
         this.enabled = physicsPropertiesVO.enabled;
     }
+
+    @Override
+    public String toString() {
+        return "PhysicsPropertiesVO{" +
+                "gravityX=" + gravityX +
+                ", gravityY=" + gravityY +
+                ", sleepVelocity=" + sleepVelocity +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

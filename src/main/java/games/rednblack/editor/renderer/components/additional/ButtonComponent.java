@@ -1,6 +1,7 @@
 package games.rednblack.editor.renderer.components.additional;
 
 import com.badlogic.gdx.utils.Array;
+
 import games.rednblack.editor.renderer.components.BaseComponent;
 
 /**
@@ -9,12 +10,16 @@ import games.rednblack.editor.renderer.components.BaseComponent;
 public class ButtonComponent implements BaseComponent {
 
     public boolean isTouched = false;
+    public boolean isEnable = true;
+    public boolean isChecked = false;
 
     private final Array<ButtonListener> listeners = new Array<>();
 
     public interface ButtonListener {
         void touchUp();
+
         void touchDown();
+
         void clicked();
     }
 
@@ -31,13 +36,13 @@ public class ButtonComponent implements BaseComponent {
     }
 
     public void setTouchState(boolean isTouched) {
-        if(!this.isTouched && isTouched) {
-            for(int i = 0; i < listeners.size; i++) {
+        if (!this.isTouched && isTouched) {
+            for (int i = 0; i < listeners.size; i++) {
                 listeners.get(i).touchDown();
             }
         }
-        if(this.isTouched && !isTouched) {
-            for(int i = 0; i < listeners.size; i++) {
+        if (this.isTouched && !isTouched) {
+            for (int i = 0; i < listeners.size; i++) {
                 listeners.get(i).touchUp();
                 listeners.get(i).clicked();
             }
@@ -48,6 +53,8 @@ public class ButtonComponent implements BaseComponent {
     @Override
     public void reset() {
         isTouched = false;
+        isEnable = true;
+        isChecked = false;
         listeners.clear();
     }
 }

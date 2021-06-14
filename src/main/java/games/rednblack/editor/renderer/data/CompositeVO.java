@@ -371,6 +371,13 @@ public class CompositeVO {
         return itemsList;
     }
 
+    public LayerItemVO getLayerByName(String name) {
+        for (LayerItemVO layer : layers) {
+            if (layer.layerName.equals(name)) return layer;
+        }
+        return null;
+    }
+
     public void loadFromEntity(Entity compositeEntity) {
         NodeComponent nodeComponent = compositeEntity.getComponent(NodeComponent.class);
         ComponentMapper<MainItemComponent> mainItemComponentMapper = ComponentMapper.getFor(MainItemComponent.class);
@@ -443,5 +450,25 @@ public class CompositeVO {
 
         LayerMapComponent layerMapComponent = layerMainItemComponentComponentMapper.get(compositeEntity);
         layers = layerMapComponent.getLayers();
+    }
+
+    @Override
+    public String toString() {
+        return "CompositeVO{" +
+                "sImages=" + sImages +
+                ", sAtlasImages=" + sAtlasImages +
+                ", sImage9patchs=" + sImage9patchs +
+                ", sLabels=" + sLabels +
+                ", sComposites=" + sComposites +
+                ", sParticleEffects=" + sParticleEffects +
+                ", sTalosVFX=" + sTalosVFX +
+                ", sLights=" + sLights +
+                ", sSpineAnimations=" + sSpineAnimations +
+                ", sSpriteAnimations=" + sSpriteAnimations +
+                ", sSpriterAnimations=" + sSpriterAnimations +
+                ", sColorPrimitives=" + sColorPrimitives +
+                ", layers=" + layers +
+                ", sStickyNotes=" + sStickyNotes +
+                '}';
     }
 }

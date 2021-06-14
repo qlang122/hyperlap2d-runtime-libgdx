@@ -10,4 +10,14 @@ public class GraphConnectionVO implements Comparable<GraphConnectionVO> {
     public int compareTo(GraphConnectionVO o) {
         return toField.compareTo(o.toField);
     }
+
+    @Override
+    public String toString() {
+        return "GraphConnectionVO{" +
+                "fromNode='" + fromNode + '\'' +
+                ", fromField='" + fromField + '\'' +
+                ", toNode='" + toNode + '\'' +
+                ", toField='" + toField + '\'' +
+                '}';
+    }
 }
