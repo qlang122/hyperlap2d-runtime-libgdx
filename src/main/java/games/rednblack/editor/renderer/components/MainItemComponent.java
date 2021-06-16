@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class MainItemComponent implements BaseComponent {
     public int uniqueId = 0;
-	public String itemIdentifier = "";
+	public String id = "";
 	public String libraryLink = "";
     public Set<String> tags = new HashSet<>();
     private String customVars = "";
@@ -40,7 +40,7 @@ public class MainItemComponent implements BaseComponent {
 	@Override
 	public void reset() {
 		uniqueId = 0;
-		itemIdentifier = "";
+		id = "";
 		libraryLink = "";
 		tags.clear();
 		customVars = "";

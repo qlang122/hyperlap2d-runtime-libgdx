@@ -37,7 +37,7 @@ public class ColorPrimitiveVO extends MainItemVO {
     public String toString() {
         return "ColorPrimitiveVO{" +
                 "uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

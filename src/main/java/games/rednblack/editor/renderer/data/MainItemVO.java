@@ -13,7 +13,7 @@ public class MainItemVO {
     public enum RenderingLayer {SCREEN, SCREEN_READING}
 
     public int uniqueId = -1;
-    public String itemIdentifier = "";
+    public String id = "";
     public String itemName = "";
     public String[] tags = null;
     public String customVars = "";
@@ -45,7 +45,7 @@ public class MainItemVO {
 
     public MainItemVO(MainItemVO vo) {
         uniqueId = vo.uniqueId;
-        itemIdentifier = vo.itemIdentifier;
+        id = vo.id;
         itemName = vo.itemName;
         if (vo.tags != null) tags = Arrays.copyOf(vo.tags, vo.tags.length);
         customVars = vo.customVars;
@@ -90,7 +90,7 @@ public class MainItemVO {
         ZIndexComponent zindexComponent = entity.getComponent(ZIndexComponent.class);
 
         uniqueId = mainItemComponent.uniqueId;
-        itemIdentifier = mainItemComponent.itemIdentifier;
+        id = mainItemComponent.id;
         itemName = mainItemComponent.libraryLink;
         tags = new String[mainItemComponent.tags.size()];
         tags = mainItemComponent.tags.toArray(tags);
@@ -151,7 +151,7 @@ public class MainItemVO {
     public String toString() {
         return "MainItemVO{" +
                 "uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

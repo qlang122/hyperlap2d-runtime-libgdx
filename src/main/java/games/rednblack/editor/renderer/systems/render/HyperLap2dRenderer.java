@@ -208,7 +208,7 @@ public class HyperLap2dRenderer extends IteratingSystem {
         DimensionsComponent dimensions = dimensionsMapper.get(rootEntity);
         MainItemComponent mainItemComponent = mainItemComponentMapper.get(rootEntity);
 
-        String fboTag = mainItemComponent.itemIdentifier;
+        String fboTag = mainItemComponent.id;
 
         boolean scissors = false;
 

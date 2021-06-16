@@ -36,7 +36,7 @@ public class SpineVO extends MainItemVO {
                 "animationName='" + animationName + '\'' +
                 ", currentAnimationName='" + currentAnimationName + '\'' +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

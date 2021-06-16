@@ -57,7 +57,7 @@ public class SpriteAnimationVO extends MainItemVO {
                 ", frameRangeMap=" + frameRangeMap +
                 ", playMode=" + playMode +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

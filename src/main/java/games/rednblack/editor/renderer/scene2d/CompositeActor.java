@@ -168,7 +168,7 @@ public class CompositeActor extends Group {
 
     protected void processMain(Actor actor, MainItemVO vo) {
 
-        actor.setName(vo.itemIdentifier);
+        actor.setName(vo.id);
         buildCoreData(actor, vo);
 
         //actor properties
@@ -198,7 +198,7 @@ public class CompositeActor extends Group {
 
         //core data
         CoreActorData data = new CoreActorData();
-        data.id = vo.itemIdentifier;
+        data.id = vo.id;
         data.layerIndex = getLayerIndex(vo.layerName);
         data.tags = vo.tags;
         data.customVars = cv;

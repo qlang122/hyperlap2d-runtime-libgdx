@@ -68,7 +68,7 @@ public class LabelVO extends MainItemVO {
                 ", wrap=" + wrap +
                 ", isTyping=" + isTyping +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

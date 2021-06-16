@@ -35,7 +35,7 @@ public class TalosVO extends MainItemVO {
                 "particleName='" + particleName + '\'' +
                 ", transform=" + transform +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

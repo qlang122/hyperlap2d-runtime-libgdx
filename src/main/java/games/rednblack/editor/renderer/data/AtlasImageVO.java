@@ -44,7 +44,7 @@ public class AtlasImageVO extends MainItemVO {
                 ", isRepeat=" + isRepeat +
                 ", isPolygon=" + isPolygon +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

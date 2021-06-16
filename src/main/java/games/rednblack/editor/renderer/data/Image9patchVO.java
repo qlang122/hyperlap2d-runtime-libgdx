@@ -6,7 +6,6 @@ import java.util.Arrays;
 
 import games.rednblack.editor.renderer.components.DimensionsComponent;
 import games.rednblack.editor.renderer.components.NinePatchComponent;
-import games.rednblack.editor.renderer.components.TextureRegionComponent;
 
 public class Image9patchVO extends MainItemVO {
     public String atlasName = "";
@@ -47,7 +46,7 @@ public class Image9patchVO extends MainItemVO {
                 ", width=" + width +
                 ", height=" + height +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

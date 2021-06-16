@@ -30,7 +30,6 @@ import games.rednblack.editor.renderer.scripts.IScript;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 /**
  * Created by azakhary on 7/8/2015.
@@ -59,7 +58,7 @@ public class ItemWrapper {
 
     private void mapEntity(Entity entity) {
         MainItemComponent mainItemComponent = ComponentRetriever.get(entity, MainItemComponent.class);
-        childrenMap.put(mainItemComponent.itemIdentifier, entity);
+        childrenMap.put(mainItemComponent.id, entity);
 
         for (String tag : mainItemComponent.tags) {
             mapTagEntity(tag, entity);

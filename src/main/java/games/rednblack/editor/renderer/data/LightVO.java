@@ -3,7 +3,6 @@ package games.rednblack.editor.renderer.data;
 import com.badlogic.ashley.core.Entity;
 
 import games.rednblack.editor.renderer.components.light.LightObjectComponent;
-import games.rednblack.editor.renderer.physics.PhysicsBodyLoader;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -108,7 +107,7 @@ public class LightVO extends MainItemVO {
                 ", isSoft=" + isSoft +
                 ", isActive=" + isActive +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +

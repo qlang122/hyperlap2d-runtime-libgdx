@@ -90,7 +90,7 @@ public class CompositeItemVO extends MainItemVO {
 				", scissorsEnabled=" + scissorsEnabled +
 				", renderToFBO=" + renderToFBO +
 				", uniqueId=" + uniqueId +
-				", itemIdentifier='" + itemIdentifier + '\'' +
+				", id='" + id + '\'' +
 				", itemName='" + itemName + '\'' +
 				", tags=" + Arrays.toString(tags) +
 				", customVars='" + customVars + '\'' +

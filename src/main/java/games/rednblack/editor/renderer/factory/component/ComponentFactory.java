@@ -100,7 +100,7 @@ public abstract class ComponentFactory {
         MainItemComponent component = engine.createComponent(MainItemComponent.class);
         component.setCustomVarString(vo.customVars);
         component.uniqueId = vo.uniqueId;
-        component.itemIdentifier = vo.itemIdentifier;
+        component.id = vo.id;
         component.libraryLink = vo.itemName;
         component.visible = vo.visible;
         if (vo.tags != null) {

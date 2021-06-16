@@ -55,7 +55,7 @@ public class SpriterVO extends MainItemVO {
                 ", currentAnimationName='" + currentAnimationName + '\'' +
                 ", actionName='" + actionName + '\'' +
                 ", uniqueId=" + uniqueId +
-                ", itemIdentifier='" + itemIdentifier + '\'' +
+                ", id='" + id + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", customVars='" + customVars + '\'' +
