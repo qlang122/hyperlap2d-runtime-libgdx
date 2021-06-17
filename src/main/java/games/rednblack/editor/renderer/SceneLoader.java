@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import games.rednblack.editor.renderer.box2dLight.DirectionalLight;
 import games.rednblack.editor.renderer.box2dLight.RayHandler;
 import games.rednblack.editor.renderer.box2dLight.RayHandlerOptions;
@@ -202,8 +203,8 @@ public class SceneLoader {
                 if (nodeComponent != null) {
                     // it is composite
                     for (Entity node : nodeComponent.children) {
-                       if (!node.isRemoving() && !node.isScheduledForRemoval())
-                           engine.removeEntity(node);
+                        if (!node.isRemoving() && !node.isScheduledForRemoval())
+                            engine.removeEntity(node);
                     }
                 }
 
@@ -328,9 +329,9 @@ public class SceneLoader {
     }
 
     /*
-    * Add an actions from library actions for any entity with specified tag
-    *
-    */
+     * Add an actions from library actions for any entity with specified tag
+     *
+     */
     public void addActionByTagName(String tagName, String action) {
         ImmutableArray<Entity> entities = engine.getEntities();
         for (Entity entity : entities) {
@@ -452,14 +453,15 @@ public class SceneLoader {
      */
     static public ShaderProgram createDefaultShader() {
         ShaderProgram shader = new ShaderProgram(DefaultShaders.DEFAULT_VERTEX_SHADER, DefaultShaders.DEFAULT_FRAGMENT_SHADER);
-        if (!shader.isCompiled()) throw new IllegalArgumentException("Error compiling shader: " + shader.getLog());
+        if (!shader.isCompiled())
+            throw new IllegalArgumentException("Error compiling shader: " + shader.getLog());
         return shader;
     }
 
     public Batch getBatch() {
         return renderer.getBatch();
     }
-    
+
     public FrameBufferManager getFrameBufferManager() {
         return renderer.getFrameBufferManager();
     }
