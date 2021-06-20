@@ -30,6 +30,7 @@ public class MainItemVO {
     public boolean flipX = false;
     public boolean flipY = false;
     public boolean visible = true;
+    public boolean scaleXYLink = true;
 
     public String shaderName = "";
     public HashMap<String, ShaderUniformVO> shaderUniforms = new HashMap<>();
@@ -62,6 +63,7 @@ public class MainItemVO {
         flipX = vo.flipX;
         flipY = vo.flipY;
         visible = vo.visible;
+        scaleXYLink = vo.scaleXYLink;
 
         if (vo.shape != null) {
             shape = vo.shape.clone();
@@ -101,6 +103,7 @@ public class MainItemVO {
         y = transformComponent.y;
         scaleX = transformComponent.scaleX;
         scaleY = transformComponent.scaleY;
+        scaleXYLink = transformComponent.isXYScaleLinked;
         originX = transformComponent.originX;
         originY = transformComponent.originY;
         rotation = transformComponent.rotation;
@@ -159,6 +162,7 @@ public class MainItemVO {
                 ", y=" + y +
                 ", scaleX=" + scaleX +
                 ", scaleY=" + scaleY +
+                ", scaleXYLink=" + scaleXYLink +
                 ", originX=" + originX +
                 ", originY=" + originY +
                 ", rotation=" + rotation +

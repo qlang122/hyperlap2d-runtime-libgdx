@@ -120,6 +120,7 @@ public abstract class ComponentFactory {
         component.scaleY = vo.scaleY;
         component.x = vo.x;
         component.y = vo.y;
+        component.isXYScaleLinked = vo.scaleXYLink;
 
         if (Float.isNaN(vo.originX)) component.originX = dimensionsComponent.width / 2f;
         else component.originX = vo.originX;

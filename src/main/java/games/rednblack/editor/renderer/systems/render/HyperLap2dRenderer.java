@@ -60,6 +60,7 @@ public class HyperLap2dRenderer extends IteratingSystem {
 
     private boolean useLights = false;
     private boolean hasNormals = false;
+    private boolean isDispose = true;
 
     private final Vector3 tmpVec3 = new Vector3();
     private final Stack<Matrix4> fboM4Stack = new Stack<>();
@@ -88,6 +89,8 @@ public class HyperLap2dRenderer extends IteratingSystem {
 
         invScreenWidth = 1f / screenCamera.viewportWidth;
         invScreenHeight = 1f / screenCamera.viewportHeight;
+
+        isDispose = false;
     }
 
     public void addDrawableType(IExternalItemType itemType) {
@@ -100,6 +103,8 @@ public class HyperLap2dRenderer extends IteratingSystem {
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
+        if (isDispose) return;
+
         timeRunning += deltaTime;
 
         ViewPortComponent ViewPortComponent = viewPortMapper.get(entity);
@@ -566,6 +571,7 @@ public class HyperLap2dRenderer extends IteratingSystem {
     }
 
     public void dispose() {
+        isDispose = true;
         frameBufferManager.disposeAll();
         fboM4Pool.clear();
         fboM4Stack.clear();

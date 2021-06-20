@@ -35,6 +35,7 @@ public class TransformComponent implements BaseComponent {
         originY = component.originY;
         flipX = component.flipX;
         flipY = component.flipY;
+        isXYScaleLinked = component.isXYScaleLinked;
 
         worldTransform.set(component.worldTransform);
         computedTransform.set(component.computedTransform);
@@ -53,6 +54,7 @@ public class TransformComponent implements BaseComponent {
         rotation = 0;
         flipX = false;
         flipY = false;
+        isXYScaleLinked = true;
     }
 
     public void enableTransform() {
@@ -66,6 +68,7 @@ public class TransformComponent implements BaseComponent {
         originY = backup.originY;
         flipX = backup.flipX;
         flipY = backup.flipY;
+        isXYScaleLinked = backup.isXYScaleLinked;
         backup = null;
     }
 
