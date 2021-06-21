@@ -116,7 +116,8 @@ public class CompositeActor extends Group {
 
     protected void buildImages(ArrayList<SimpleImageVO> images, BuiltItemHandler itemHandler) {
         for (int i = 0; i < images.size(); i++) {
-            Image image = new Image(ir.getTextureRegion(images.get(i).imageName));
+            SimpleImageVO vo = images.get(i);
+            Image image = new Image(ir.getTextureRegion(vo.imageName, vo.index));
             processMain(image, images.get(i));
             addActor(image);
 
@@ -126,8 +127,9 @@ public class CompositeActor extends Group {
 
     protected void buildAtlasImages(ArrayList<AtlasImageVO> images, BuiltItemHandler itemHandler) {
         for (int i = 0; i < images.size(); i++) {
-            Image image = new Image(ir.getAtlasImagesTextureRegion(images.get(i).atlasName, images.get(i).imageName));
-            processMain(image, images.get(i));
+            AtlasImageVO vo = images.get(i);
+            Image image = new Image(ir.getAtlasImagesTextureRegion(vo.atlasName, vo.imageName, vo.index));
+            processMain(image, vo);
             addActor(image);
 
             itemHandler.onItemBuild(image);
@@ -136,16 +138,17 @@ public class CompositeActor extends Group {
 
     protected void build9PatchImages(ArrayList<Image9patchVO> patches, BuiltItemHandler itemHandler) {
         for (int i = 0; i < patches.size(); i++) {
-            String atlasName = patches.get(i).atlasName;
-            String imageName = patches.get(i).imageName;
-            TextureAtlas.AtlasRegion region = (TextureAtlas.AtlasRegion) (atlasName.isEmpty() ? ir.getTextureRegion(imageName)
-                    : ir.getAtlasImagesTextureRegion(atlasName, imageName));
+            Image9patchVO vo = patches.get(i);
+            String atlasName = vo.atlasName;
+            String imageName = vo.imageName;
+            TextureAtlas.AtlasRegion region = (TextureAtlas.AtlasRegion) (atlasName.isEmpty() ? ir.getTextureRegion(imageName, vo.index)
+                    : ir.getAtlasImagesTextureRegion(atlasName, imageName, vo.index));
             int[] splits = region.findValue("split");
             NinePatch ninePatch = new NinePatch(region, splits[0], splits[1], splits[2], splits[3]);
             Image image = new Image(ninePatch);
-            image.setWidth(patches.get(i).width * pixelsPerWU / resMultiplier);
-            image.setHeight(patches.get(i).height * pixelsPerWU / resMultiplier);
-            processMain(image, patches.get(i));
+            image.setWidth(vo.width * pixelsPerWU / resMultiplier);
+            image.setHeight(vo.height * pixelsPerWU / resMultiplier);
+            processMain(image, vo);
             addActor(image);
 
             itemHandler.onItemBuild(image);

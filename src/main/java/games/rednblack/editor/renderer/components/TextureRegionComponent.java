@@ -12,6 +12,7 @@ import games.rednblack.editor.renderer.utils.RepeatablePolygonSprite;
 public class TextureRegionComponent extends RefreshableObject implements BaseComponent {
     public String textureAtlasName = "";
     public String regionName = "";
+    public int index = -1;
     public TextureRegion region = null;
     public boolean isRepeat = false;
     public boolean isPolygon = false;
@@ -38,6 +39,7 @@ public class TextureRegionComponent extends RefreshableObject implements BaseCom
     public void reset() {
         textureAtlasName = "";
         regionName = "";
+        index = -1;
         region = null;
         repeatablePolygonSprite = null;
         isRepeat = false;

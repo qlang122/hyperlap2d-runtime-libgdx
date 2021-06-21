@@ -55,9 +55,10 @@ public class NinePatchComponentFactory extends ComponentFactory {
         String atlasName = ninePatchComponent.textureAtlasName;
         AtlasRegion atlasRegion;
         if (atlasName.isEmpty()) {
-            TextureRegion region = rm.getTextureRegion(vo.imageName);
+            TextureRegion region = rm.getTextureRegion(vo.imageName, vo.index);
             atlasRegion = (region instanceof AtlasRegion) ? (AtlasRegion) region : null;
-        } else atlasRegion = (AtlasRegion) rm.getAtlasImagesTextureRegion(atlasName, vo.imageName);
+        } else
+            atlasRegion = (AtlasRegion) rm.getAtlasImagesTextureRegion(atlasName, vo.imageName, vo.index);
 
         if (atlasRegion == null) return null;
 

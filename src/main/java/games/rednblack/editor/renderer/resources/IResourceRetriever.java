@@ -17,9 +17,9 @@ import games.rednblack.editor.renderer.data.SceneVO;
 public interface IResourceRetriever {
     TextureAtlas getMainPack();
 
-    TextureRegion getTextureRegion(String name);
+    TextureRegion getTextureRegion(String name, int index);
 
-    TextureRegion getAtlasImagesTextureRegion(String atlasName, String name);
+    TextureRegion getAtlasImagesTextureRegion(String atlasName, String name, int index);
 
     boolean hasTextureRegion(String name);
 

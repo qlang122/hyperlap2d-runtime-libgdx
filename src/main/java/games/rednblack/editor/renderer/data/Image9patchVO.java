@@ -10,6 +10,7 @@ import games.rednblack.editor.renderer.components.NinePatchComponent;
 public class Image9patchVO extends MainItemVO {
     public String atlasName = "";
     public String imageName = "";
+    public int index = -1;
     public float width = 0;
     public float height = 0;
 
@@ -21,6 +22,7 @@ public class Image9patchVO extends MainItemVO {
         super(vo);
         atlasName = vo.atlasName;
         imageName = vo.imageName;
+        index = -1;
         width = vo.width;
         height = vo.height;
     }
@@ -34,6 +36,7 @@ public class Image9patchVO extends MainItemVO {
 
         atlasName = ninePatchComponent.textureAtlasName;
         imageName = ninePatchComponent.textureRegionName;
+        index = ninePatchComponent.index;
         width = dimensionsComponent.width;
         height = dimensionsComponent.height;
     }
@@ -43,6 +46,7 @@ public class Image9patchVO extends MainItemVO {
         return "Image9patchVO{" +
                 "atlasName='" + atlasName + '\'' +
                 ", imageName='" + imageName + '\'' +
+                ", index='" + index + '\'' +
                 ", width=" + width +
                 ", height=" + height +
                 ", uniqueId=" + uniqueId +

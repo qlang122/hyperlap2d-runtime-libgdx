@@ -8,6 +8,7 @@ import games.rednblack.editor.renderer.components.TextureRegionComponent;
 
 public class SimpleImageVO extends MainItemVO {
     public String imageName = "";
+    public int index = -1;
     public boolean isRepeat = false;
     public boolean isPolygon = false;
 
@@ -18,6 +19,7 @@ public class SimpleImageVO extends MainItemVO {
     public SimpleImageVO(SimpleImageVO vo) {
         super(vo);
         imageName = vo.imageName;
+        index = vo.index;
         isRepeat = vo.isRepeat;
         isPolygon = vo.isPolygon;
     }
@@ -26,20 +28,22 @@ public class SimpleImageVO extends MainItemVO {
     public void loadFromEntity(Entity entity) {
         super.loadFromEntity(entity);
 
-        TextureRegionComponent textureRegionComponent = entity.getComponent(TextureRegionComponent.class);
-        loadFromComponent(textureRegionComponent);
+        TextureRegionComponent component = entity.getComponent(TextureRegionComponent.class);
+        loadFromComponent(component);
     }
 
-    public void loadFromComponent(TextureRegionComponent textureRegionComponent) {
-        imageName = textureRegionComponent.regionName;
-        isRepeat = textureRegionComponent.isRepeat;
-        isPolygon = textureRegionComponent.isPolygon;
+    public void loadFromComponent(TextureRegionComponent component) {
+        imageName = component.regionName;
+        index = component.index;
+        isRepeat = component.isRepeat;
+        isPolygon = component.isPolygon;
     }
 
     @Override
     public String toString() {
         return "SimpleImageVO{" +
                 "imageName='" + imageName + '\'' +
+                ", index=" + index +
                 ", isRepeat=" + isRepeat +
                 ", isPolygon=" + isPolygon +
                 ", uniqueId=" + uniqueId +

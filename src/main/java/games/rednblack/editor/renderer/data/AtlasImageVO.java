@@ -9,6 +9,7 @@ import games.rednblack.editor.renderer.components.TextureRegionComponent;
 public class AtlasImageVO extends MainItemVO {
     public String atlasName = "";
     public String imageName = "";
+    public int index = -1;
     public boolean isRepeat = false;
     public boolean isPolygon = false;
 
@@ -20,6 +21,7 @@ public class AtlasImageVO extends MainItemVO {
         super(vo);
         atlasName = vo.atlasName;
         imageName = vo.imageName;
+        index = vo.index;
         isRepeat = vo.isRepeat;
         isPolygon = vo.isPolygon;
     }
@@ -28,12 +30,13 @@ public class AtlasImageVO extends MainItemVO {
     public void loadFromEntity(Entity entity) {
         super.loadFromEntity(entity);
 
-        TextureRegionComponent textureRegionComponent = entity.getComponent(TextureRegionComponent.class);
+        TextureRegionComponent component = entity.getComponent(TextureRegionComponent.class);
 
-        atlasName = textureRegionComponent.textureAtlasName;
-        imageName = textureRegionComponent.regionName;
-        isRepeat = textureRegionComponent.isRepeat;
-        isPolygon = textureRegionComponent.isPolygon;
+        atlasName = component.textureAtlasName;
+        imageName = component.regionName;
+        index = component.index;
+        isRepeat = component.isRepeat;
+        isPolygon = component.isPolygon;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class AtlasImageVO extends MainItemVO {
         return "AtlasImageVO{" +
                 "atlasName='" + atlasName + '\'' +
                 ", imageName='" + imageName + '\'' +
+                ", index='" + index + '\'' +
                 ", isRepeat=" + isRepeat +
                 ", isPolygon=" + isPolygon +
                 ", uniqueId=" + uniqueId +
