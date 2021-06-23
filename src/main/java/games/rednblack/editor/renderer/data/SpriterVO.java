@@ -2,6 +2,7 @@ package games.rednblack.editor.renderer.data;
 
 import com.badlogic.ashley.core.Entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import games.rednblack.editor.renderer.components.SpriterDataComponent;
@@ -12,6 +13,7 @@ public class SpriterVO extends MainItemVO {
     public boolean isLooping = false;
     public int currentEntityIndex = 0;
     public String currentAnimationName = "";
+    public ArrayList<String> animations = new ArrayList<>();
 
     private String actionName = "";
 
@@ -53,6 +55,7 @@ public class SpriterVO extends MainItemVO {
                 ", isLooping=" + isLooping +
                 ", currentEntityIndex=" + currentEntityIndex +
                 ", currentAnimationName='" + currentAnimationName + '\'' +
+                ", animations='" + animations + '\'' +
                 ", actionName='" + actionName + '\'' +
                 ", uniqueId=" + uniqueId +
                 ", id='" + id + '\'' +
