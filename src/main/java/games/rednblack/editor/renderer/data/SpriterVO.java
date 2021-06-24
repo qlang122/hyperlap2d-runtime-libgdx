@@ -1,9 +1,12 @@
 package games.rednblack.editor.renderer.data;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import games.rednblack.editor.renderer.components.SpriterDataComponent;
 
@@ -13,7 +16,7 @@ public class SpriterVO extends MainItemVO {
     public boolean isLooping = false;
     public int currentEntityIndex = 0;
     public String currentAnimationName = "";
-    public ArrayList<String> animations = new ArrayList<>();
+    public HashSet<String> animations = new HashSet<>();
 
     private String actionName = "";
 
@@ -46,6 +49,15 @@ public class SpriterVO extends MainItemVO {
         isLooping = spriterComponent.isLooping;
         currentEntityIndex = spriterComponent.currentEntityIndex;
         currentAnimationName = spriterComponent.currentAnimationName;
+    }
+
+    public String constructJsonString() {
+        String str = "";
+        Json json = new Json();
+        json.setOutputType(JsonWriter.OutputType.json);
+        str = json.toJson(this);
+        json.prettyPrint(str);
+        return str;
     }
 
     @Override
