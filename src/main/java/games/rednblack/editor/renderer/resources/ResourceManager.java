@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 
@@ -79,6 +80,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
     protected HashMap<String, TextureAtlas> spriterAtlas = new HashMap<>();
     protected HashMap<String, FileHandle> spriterSCML = new HashMap<>();
+    protected HashMap<String, Array<FileHandle>> spriterExtraSCML = new HashMap<>();
 
     protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<>();
 
@@ -290,7 +292,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
         }
 
         for (String name : atlasImageNamesToLoad) {
-            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + atlasImagesPath + File.separator + name + ".atlas"));
+            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName
+                    + File.separator + atlasImagesPath + File.separator + name + ".atlas"));
             atlasImagesAtlas.put(name, animAtlas);
         }
     }
@@ -335,15 +338,18 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
         }
 
         for (String name : spriteAnimNamesToLoad) {
-            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriteAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
+            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName
+                    + File.separator + spriteAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
             spriteAnimations.put(name, animAtlas);
         }
     }
 
     public void loadSpineAnimation(String name) {
-        TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
+        TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName
+                + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
         skeletonAtlases.put(name, animAtlas);
-        skeletonJSON.put(name, Gdx.files.internal("orig" + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".json"));
+        skeletonJSON.put(name, Gdx.files.internal("orig" + File.separator + spineAnimationsPath
+                + File.separator + name + File.separator + name + ".json"));
     }
 
 
@@ -374,11 +380,33 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
                 spriterSCML.remove(key);
             }
         }
+
+        FileHandle extraConfigFile = Gdx.files.internal(packResolutionName + File.separator
+                + spriterAnimationsPath + File.separator + "anim-relation.dt");
+        SpriterRelationVO rVO = null;
+        if (extraConfigFile.exists()) {
+            Json json = new Json();
+            json.setIgnoreUnknownFields(true);
+            rVO = json.fromJson(SpriterRelationVO.class, extraConfigFile.readString("utf-8"));
+        }
+
         for (String name : spriterAnimNamesToLoad) {
-            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
+            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator
+                    + spriterAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
             spriterAtlas.put(name, animAtlas);
-            FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
+            FileHandle animFile = Gdx.files.internal(packResolutionName + File.separator + spriterAnimationsPath
+                    + File.separator + name + File.separator + name + ".scml");
             spriterSCML.put(name, animFile);
+            if (rVO != null && rVO.animations != null && rVO.animations.containsKey(name)) {
+                SpriterVO vo = rVO.animations.get(name);
+                Array<FileHandle> files = new Array<>();
+                for (String s : vo.animations) {
+                    FileHandle f = new FileHandle(packResolutionName + File.separator + spriterAnimationsPath
+                            + File.separator + "extra" + File.separator + s + ".scml");
+                    files.add(f);
+                }
+                spriterExtraSCML.put(name, files);
+            }
         }
     }
 
@@ -421,19 +449,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
         FileHandle fontFile = Gdx.files.internal(fontsPath + File.separator + name + ".ttf");
 
         FileHandle txtFile = Gdx.files.internal(fontsPath + File.separator + "gbk-chars.txt");
-        InputStream read = txtFile.read();
-        StringBuffer buffer = new StringBuffer();
-        InputStreamReader in = new InputStreamReader(read, "utf-8");
-        BufferedReader reader = new BufferedReader(in, 1024);
-        String tempStr;
-        while ((tempStr = reader.readLine()) != null) {
-            buffer.append(tempStr);
-        }
-        reader.close();
-        in.close();
-        read.close();
-
-        String charsTxt = new String(buffer.toString().getBytes(), "utf-8");
+        String charsTxt = txtFile.readString("utf-8");
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -551,6 +567,11 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     @Override
     public FileHandle getSpriterSCML(String name) {
         return spriterSCML.get(name);
+    }
+
+    @Override
+    public Array<FileHandle> getSpriterExtraSCML(String name) {
+        return spriterExtraSCML.get(name);
     }
 
     @Override

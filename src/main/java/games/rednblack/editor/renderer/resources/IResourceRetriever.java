@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.Array;
 
 import games.rednblack.editor.renderer.data.ResolutionEntryVO;
 import games.rednblack.editor.renderer.data.ProjectInfoVO;
@@ -32,6 +33,8 @@ public interface IResourceRetriever {
     FileHandle getTalosVFX(String name);
 
     FileHandle getSpriterSCML(String name);
+
+    Array<FileHandle> getSpriterExtraSCML(String name);
 
     TextureAtlas getSpriterAtlas(String name);
 
