@@ -88,12 +88,12 @@ uploadArchives {
                     artifactId = artifact
                     name 'HyperLap2D libGDX runtime'
                     description 'HyperLap2D libGDX runtime to render exported scenes'
-                    url 'https://github.com/rednblackgames/hyperlap2d-runtime-libgdx'
+                    url 'https://github.com/qlang122/hyperlap2d-runtime-libgdx'
 
                     scm {
-                        url 'scm:git@github.com:rednblackgames/hyperlap2d-runtime-libgdx.git'
-                        connection 'scm:git@github.com:rednblackgames/hyperlap2d-runtime-libgdx.git'
-                        developerConnection 'scm:git@github.com:rednblackgames/hyperlap2d-runtime-libgdx.git'
+                        url 'scm:git@github.com:qlang122/hyperlap2d-runtime-libgdx.git'
+                        connection 'scm:git@github.com:qlang122/hyperlap2d-runtime-libgdx.git'
+                        developerConnection 'scm:git@github.com:qlang122/hyperlap2d-runtime-libgdx.git'
                     }
 
                     licenses {

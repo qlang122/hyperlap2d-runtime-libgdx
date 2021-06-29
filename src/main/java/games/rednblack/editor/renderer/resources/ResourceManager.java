@@ -571,7 +571,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
     @Override
     public Array<FileHandle> getSpriterExtraSCML(String name) {
-        return spriterExtraSCML.get(name);
+        Array<FileHandle> array = spriterExtraSCML.get(name);
+        return array == null ? new Array<>() : array;
     }
 
     @Override
