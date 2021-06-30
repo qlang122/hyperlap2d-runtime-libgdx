@@ -18,4 +18,11 @@ public class SpriterRelationVO {
         str = json.toJson(this);
         return str;
     }
+
+    @Override
+    public String toString() {
+        return "SpriterRelationVO{" +
+                "animations=" + animations +
+                '}';
+    }
 }

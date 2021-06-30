@@ -5,9 +5,13 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.Json;
 
 import games.rednblack.editor.renderer.data.ProjectInfoVO;
+import games.rednblack.editor.renderer.data.SpriterRelationVO;
+import games.rednblack.editor.renderer.data.SpriterVO;
 
 import java.io.File;
 import java.util.HashSet;
@@ -131,11 +135,31 @@ public class AsyncResourceManager extends ResourceManager {
                 spriterSCML.remove(key);
             }
         }
+
+        FileHandle extraConfigFile = Gdx.files.internal(packResolutionName + File.separator
+                + spriterAnimationsPath + File.separator + "anim-relation.dt");
+        SpriterRelationVO rVO = null;
+        if (extraConfigFile.exists()) {
+            Json json = new Json();
+            json.setIgnoreUnknownFields(true);
+            rVO = json.fromJson(SpriterRelationVO.class, extraConfigFile.readString("utf-8"));
+        }
+
         for (String name : spriterAnimNamesToLoad) {
             FileHandle fileHandle = Gdx.files.internal(packResolutionName + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".atlas");
             spriterAtlas.put(name, manager.get(fileHandle.path(), TextureAtlas.class));
             FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
             spriterSCML.put(name, animFile);
+            if (rVO != null && rVO.animations != null && rVO.animations.containsKey(name)) {
+                SpriterVO vo = rVO.animations.get(name);
+                Array<FileHandle> files = new Array<>();
+                for (String s : vo.animations) {
+                    FileHandle f = new FileHandle(packResolutionName + File.separator + spriterAnimationsPath
+                            + File.separator + "extra" + File.separator + s + ".scml");
+                    files.add(f);
+                }
+                spriterExtraSCML.put(name, files);
+            }
         }
     }
 
