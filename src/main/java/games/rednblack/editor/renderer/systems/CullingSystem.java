@@ -4,9 +4,11 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+
 import games.rednblack.editor.renderer.components.*;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
 
@@ -21,7 +23,7 @@ public class CullingSystem extends IteratingSystem {
     final private ComponentMapper<PhysicsBodyComponent> physicsBodyMapper;
 
     Rectangle view = new Rectangle();
-    OrthographicCamera camera;
+    Camera camera;
 
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
@@ -37,16 +39,17 @@ public class CullingSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         ViewPortComponent viewPort = viewPortMapper.get(entity);
-        this.camera = (OrthographicCamera) viewPort.viewPort.getCamera();
-        view.width = (camera.viewportWidth * camera.zoom);
-        view.height = (camera.viewportHeight * camera.zoom);
+        this.camera = viewPort.viewPort.getCamera();
+        float zoom = camera instanceof OrthographicCamera ? ((OrthographicCamera) camera).zoom : 1;
+        view.width = (camera.viewportWidth * zoom);
+        view.height = (camera.viewportHeight * zoom);
         view.x = camera.position.x - (view.width * 0.5f);
         view.y = camera.position.y - (view.height * 0.5f);
 
         MainItemComponent m = mainItemMapper.get(entity);
         m.culled = false;
 
-        if(debug) {
+        if (debug) {
             shapeRenderer.setProjectionMatrix(camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         }
@@ -65,9 +68,9 @@ public class CullingSystem extends IteratingSystem {
 
     void cull(Entity entity) {
         BoundingBoxComponent b = boundingBoxMapper.get(entity);
-        if (b==null) return;
+        if (b == null) return;
         PhysicsBodyComponent p = physicsBodyMapper.get(entity);
-        if (p!= null)
+        if (p != null)
             if (p.bodyType > 1) return;
 
         MainItemComponent m = mainItemMapper.get(entity);
