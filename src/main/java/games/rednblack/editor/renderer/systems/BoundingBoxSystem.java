@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
 import games.rednblack.editor.renderer.components.*;
 
 public class BoundingBoxSystem extends IteratingSystem {
@@ -33,7 +34,7 @@ public class BoundingBoxSystem extends IteratingSystem {
         BoundingBoxComponent b = boundingBoxMapper.get(entity);
 
         MainItemComponent m = null;
-        if (parentNode != null){
+        if (parentNode != null) {
             m = mainItemMapper.get(parentNode.parentEntity);
         }
 
@@ -41,7 +42,7 @@ public class BoundingBoxSystem extends IteratingSystem {
         TransformComponent t = transformMapper.get(entity);
 
         if (m != null && (!m.visible || m.culled))
-                return;
+            return;
 
         float originalX = t.x;
         float originalY = t.y;
@@ -64,10 +65,10 @@ public class BoundingBoxSystem extends IteratingSystem {
                 float scaleOffsetX = t.originX * scaleX - t.originX;
                 float scaleOffsetY = t.originY * scaleY - t.originY;
 
-                b.points[0].set(t.x -scaleOffsetX,t.y -scaleOffsetY);
-                b.points[1].set(t.x -scaleOffsetX + d.width*scaleX,t.y -scaleOffsetY);
-                b.points[2].set(t.x -scaleOffsetX + d.width*scaleX,t.y -scaleOffsetY + d.height*scaleY);
-                b.points[3].set(t.x -scaleOffsetX ,t.y -scaleOffsetY + d.height*scaleY);
+                b.points[0].set(t.x - scaleOffsetX, t.y - scaleOffsetY);
+                b.points[1].set(t.x - scaleOffsetX + d.width * scaleX, t.y - scaleOffsetY);
+                b.points[2].set(t.x - scaleOffsetX + d.width * scaleX, t.y - scaleOffsetY + d.height * scaleY);
+                b.points[3].set(t.x - scaleOffsetX, t.y - scaleOffsetY + d.height * scaleY);
             } else {
                 float pivotX = t.originX * scaleX;
                 float pivotY = t.originY * scaleY;
@@ -79,7 +80,7 @@ public class BoundingBoxSystem extends IteratingSystem {
                 if (parentTransform == null)
                     break;
                 if (parentTransform.rotation != 0) {
-                    for(int i = 0; i < 4; i++)
+                    for (int i = 0; i < 4; i++)
                         b.points[i].rotateDeg(parentTransform.rotation);
                 }
 
@@ -95,13 +96,13 @@ public class BoundingBoxSystem extends IteratingSystem {
                 tmpVec.set(originX, originY);
                 tmpVec.rotateDeg(parentTransform.rotation);
 
-                for(int i = 0; i < 4; i++) {
+                for (int i = 0; i < 4; i++) {
                     b.points[i].add(originX - tmpVec.x, originY - tmpVec.y);
 
                     b.points[i].x = b.points[i].x * pScaleX + parentTransform.x - scaleOffsetX;
                     b.points[i].y = b.points[i].y * pScaleY + parentTransform.y - scaleOffsetY;
                 }
-                parentNode =  parentNodeMapper.get(parentNode.parentEntity);
+                parentNode = parentNodeMapper.get(parentNode.parentEntity);
             }
             b.checksum = calcCheckSum(entity);
             b.createBoundingRect();
@@ -142,13 +143,13 @@ public class BoundingBoxSystem extends IteratingSystem {
         float scaleX = transform.scaleX * (transform.flipX ? -1 : 1);
         float scaleY = transform.scaleY * (transform.flipY ? -1 : 1);
 
-        float width = dimension.width*scaleX;
-        float height = dimension.height*scaleY;
+        float width = dimension.width * scaleX;
+        float height = dimension.height * scaleY;
 
-        box.points[0].set(-pivotX,-pivotY);
-        box.points[1].set(width-pivotX, -pivotY);
-        box.points[2].set(-pivotX,height-pivotY);
-        box.points[3].set(width-pivotX,height-pivotY);
+        box.points[0].set(-pivotX, -pivotY);
+        box.points[1].set(width - pivotX, -pivotY);
+        box.points[2].set(-pivotX, height - pivotY);
+        box.points[3].set(width - pivotX, height - pivotY);
 
         float scaleOffsetX;
         float scaleOffsetY;
@@ -161,10 +162,10 @@ public class BoundingBoxSystem extends IteratingSystem {
             scaleOffsetY = (height - dimension.height) * (transform.originY / dimension.height);
         }
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             box.points[i].rotateDeg(transform.rotation);
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             box.points[i].x = box.points[i].x + transform.x - scaleOffsetX + pivotX;
             box.points[i].y = box.points[i].y + transform.y - scaleOffsetY + pivotY;
         }
