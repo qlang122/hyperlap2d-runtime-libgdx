@@ -41,8 +41,8 @@ public class CullingSystem extends IteratingSystem {
         ViewPortComponent viewPort = viewPortMapper.get(entity);
         this.camera = viewPort.viewPort.getCamera();
         float zoom = camera instanceof OrthographicCamera ? ((OrthographicCamera) camera).zoom : 1;
-        view.width = ((camera.viewportWidth + 300) * zoom);
-        view.height = ((camera.viewportHeight + 300) * zoom);
+        view.width = ((camera.viewportWidth * 2) * zoom);
+        view.height = ((camera.viewportHeight * 2) * zoom);
         view.x = camera.position.x - (view.width * 0.5f);
         view.y = camera.position.y - (view.height * 0.5f);
 

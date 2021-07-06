@@ -7,10 +7,12 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+
 import games.rednblack.editor.renderer.components.PolygonComponent;
 import games.rednblack.editor.renderer.components.ScriptComponent;
 import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
+import games.rednblack.editor.renderer.physics.PhysicsBodyLoader;
 import games.rednblack.editor.renderer.physics.PhysicsContact;
 import games.rednblack.editor.renderer.scripts.IScript;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
@@ -83,7 +85,7 @@ public class PhysicsSystem extends IteratingSystem implements ContactListener {
      * to current {@link PhysicsBodyComponent#body} position
      *
      * @param entity Entity to interpolate
-     * @param alpha linear interpolation factor
+     * @param alpha  linear interpolation factor
      */
     public void interpolate(Entity entity, float alpha) {
         PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
@@ -102,7 +104,7 @@ public class PhysicsSystem extends IteratingSystem implements ContactListener {
 
         transformComponent.x = bodyPosition.x * alpha + transformComponent.x * (1.0f - alpha);
         transformComponent.y = bodyPosition.y * alpha + transformComponent.y * (1.0f - alpha);
-        
+
         float cs = (1.0f - alpha) * MathUtils.cosDeg(angle) + alpha * MathUtils.cos(bodyAngle);
         float sn = (1.0f - alpha) * MathUtils.sinDeg(angle) + alpha * MathUtils.sin(bodyAngle);
 
@@ -120,7 +122,7 @@ public class PhysicsSystem extends IteratingSystem implements ContactListener {
         PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
         PolygonComponent polygonComponent = ComponentRetriever.get(entity, PolygonComponent.class);
 
-        physicsBodyComponent.setWorld(world);
+        TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
 
         if (polygonComponent == null && physicsBodyComponent.body != null) {
             world.destroyBody(physicsBodyComponent.body);
@@ -128,7 +130,11 @@ public class PhysicsSystem extends IteratingSystem implements ContactListener {
         }
 
         if (physicsBodyComponent.body == null && polygonComponent != null) {
-            physicsBodyComponent.scheduleRefresh();
+            physicsBodyComponent.centerX = transformComponent.originX;
+            physicsBodyComponent.centerY = transformComponent.originY;
+
+            physicsBodyComponent.body = PhysicsBodyLoader.getInstance().createBody(world, entity, physicsBodyComponent, polygonComponent.vertices, transformComponent);
+            physicsBodyComponent.body.setUserData(entity);
         }
 
         physicsBodyComponent.executeRefresh(entity);

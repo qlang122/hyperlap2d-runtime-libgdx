@@ -28,6 +28,7 @@ import games.rednblack.editor.renderer.box2dLight.RayHandler;
 import games.rednblack.editor.renderer.components.*;
 import games.rednblack.editor.renderer.components.light.LightBodyComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
+import games.rednblack.editor.renderer.components.physics.SensorComponent;
 import games.rednblack.editor.renderer.data.MainItemVO;
 import games.rednblack.editor.renderer.resources.IResourceRetriever;
 
@@ -74,6 +75,7 @@ public abstract class ComponentFactory {
         createScriptComponent(entity, vo);
         createMeshComponent(entity, vo);
         createPhysicsComponents(entity, vo);
+        createSensorComponent(entity, vo);
         createLightComponents(entity, vo);
         createShaderComponent(entity, vo);
     }
@@ -185,6 +187,26 @@ public abstract class ComponentFactory {
         }
 
         createPhysicsBodyPropertiesComponent(entity, vo);
+    }
+
+    /**
+     * Creats the sensor component and adds it to the entity.
+     *
+     * @param entity The entity to add the component to.
+     * @param vo     The data transfer object to create the component from.
+     */
+    protected void createSensorComponent(Entity entity, MainItemVO vo) {
+        if (vo.sensor == null) {
+            return;
+        }
+
+        SensorComponent sensorComponent = engine.createComponent(SensorComponent.class);
+        sensorComponent.bottom = vo.sensor.bottom;
+        sensorComponent.left = vo.sensor.left;
+        sensorComponent.right = vo.sensor.right;
+        sensorComponent.top = vo.sensor.top;
+
+        entity.add(sensorComponent);
     }
 
     protected PhysicsBodyComponent createPhysicsBodyPropertiesComponent(Entity entity, MainItemVO vo) {

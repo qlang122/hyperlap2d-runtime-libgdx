@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import games.rednblack.editor.renderer.components.*;
 import games.rednblack.editor.renderer.components.light.LightBodyComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
+import games.rednblack.editor.renderer.components.physics.SensorComponent;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ public class MainItemVO {
     public ShapeVO shape = null;
     public PhysicsBodyDataVO physics = null;
     public LightBodyDataVO light = null;
+    public SensorDataVO sensor = null;
 
     public MainItemVO() {
 
@@ -71,6 +73,10 @@ public class MainItemVO {
 
         if (vo.physics != null) {
             physics = new PhysicsBodyDataVO(vo.physics);
+        }
+
+        if (vo.sensor != null) {
+            sensor = new SensorDataVO(vo.sensor);
         }
 
         if (vo.light != null) {
@@ -133,6 +139,12 @@ public class MainItemVO {
         if (physicsComponent != null) {
             physics = new PhysicsBodyDataVO();
             physics.loadFromComponent(physicsComponent);
+        }
+
+        SensorComponent sensorComponent = entity.getComponent(SensorComponent.class);
+        if (sensorComponent != null) {
+            sensor = new SensorDataVO();
+            sensor.loadFromComponent(sensorComponent);
         }
 
         LightBodyComponent lightBodyComponent = entity.getComponent(LightBodyComponent.class);
