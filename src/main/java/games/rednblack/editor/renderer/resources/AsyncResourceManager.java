@@ -3,7 +3,6 @@ package games.rednblack.editor.renderer.resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -25,10 +24,6 @@ public class AsyncResourceManager extends ResourceManager {
 
     public void setProjectInfoVO(ProjectInfoVO vo) {
         this.projectVO = vo;
-    }
-
-    public HashSet<String> getSpineAnimNamesToLoad() {
-        return this.spineAnimNamesToLoad;
     }
 
     public void addAtlasPack(String name, TextureAtlas pack) {
@@ -86,24 +81,6 @@ public class AsyncResourceManager extends ResourceManager {
         throw new GdxRuntimeException("see loadSpriteAnimations(AssetManager)");
     }
 
-    public HashSet<String> getSpriteAnimNamesToLoad() {
-        return this.spriteAnimNamesToLoad;
-    }
-
-    public void loadSpriteAnimations(AssetManager manager) {
-        // empty existing ones that are not scheduled to load
-        for (String key : spriteAnimations.keySet()) {
-            if (!spriteAnimNamesToLoad.contains(key)) {
-                spriteAnimations.remove(key);
-            }
-        }
-
-        for (String name : spriteAnimNamesToLoad) {
-            FileHandle packFile = Gdx.files.internal(packResolutionName + File.separator + spriteAnimationsPath + File.separator + name + File.separator + name + ".atlas");
-            spriteAnimations.put(name, manager.get(packFile.path(), TextureAtlas.class));
-        }
-    }
-
     @Override
     public void loadSpriterAnimations() {
         throw new GdxRuntimeException("see loadSpriterAnimations(AssetManager)");
@@ -150,37 +127,5 @@ public class AsyncResourceManager extends ResourceManager {
     @Override
     public void loadParticleEffects() {
         throw new GdxRuntimeException("see loadParticleEffects(AssetManager)");
-    }
-
-    public HashSet<String> getParticleEffectsNamesToLoad() {
-        return this.particleEffectNamesToLoad;
-    }
-
-    public void loadParticleEffects(AssetManager manager) {
-        // empty existing ones that are not scheduled to load
-        for (String key : particleEffects.keySet()) {
-            if (!particleEffectNamesToLoad.contains(key)) {
-                particleEffects.remove(key);
-            }
-        }
-
-        // load scheduled
-        for (String name : particleEffectNamesToLoad) {
-            FileHandle res = Gdx.files.internal(particleEffectsPath + File.separator + name);
-            particleEffects.put(name, manager.get(res.path(), ParticleEffect.class));
-        }
-
-        //Talos
-        // empty existing ones that are not scheduled to load
-        for (String key : talosVFXs.keySet()) {
-            if (!talosNamesToLoad.contains(key)) {
-                talosVFXs.remove(key);
-            }
-        }
-
-        // load scheduled
-        for (String name : talosNamesToLoad) {
-            talosVFXs.put(name, Gdx.files.internal(talosPath + File.separator + name));
-        }
     }
 }

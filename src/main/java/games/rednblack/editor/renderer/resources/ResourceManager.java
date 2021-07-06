@@ -83,7 +83,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     protected HashMap<String, FileHandle> spriterSCML = new HashMap<>();
     protected HashMap<String, Array<FileHandle>> spriterExtraSCML = new HashMap<>();
 
-    protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<>();
+    protected HashMap<String, Array<TextureAtlas.AtlasRegion>> spriteAnimations = new HashMap<>();
 
     protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<>();
     protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<>();
@@ -338,7 +338,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
                     effect.loadEmitterImages(atlas, "");
                     particleEffects.put(name, effect);
                     break;
-                } catch (Exception ignore) { }
+                } catch (Exception ignore) {
+                }
             }
         }
 
@@ -372,7 +373,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
     }
 
     public void loadSpineAnimation(String name) {
-        skeletonJSON.put(name, Gdx.files.internal("orig"+ File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".json"));
+        skeletonJSON.put(name, Gdx.files.internal("orig" + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".json"));
     }
 
 
@@ -532,11 +533,11 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
      */
 
     @Override
-    public TextureRegion getTextureRegion(String name) {
+    public TextureRegion getTextureRegion(String name, int index) {
         if (reverseAtlasMap.get(name) == null)
             return null;
         TextureAtlas atlas = atlasesPack.get(reverseAtlasMap.get(name));
-        return atlas.findRegion(name);
+        return atlas.findRegion(name, index);
     }
 
     @Override
@@ -627,15 +628,10 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever, Dis
 
     @Override
     public void dispose() {
-        for (TextureAtlas atlas : atlasesPack.values())
+        for (TextureAtlas atlas : atlasesPack.values()) {
             atlas.dispose();
+        }
         for (TextureAtlas textureAtlas : atlasImagesAtlas.values()) {
-            textureAtlas.dispose();
-        }
-        for (TextureAtlas textureAtlas : skeletonAtlases.values()) {
-            textureAtlas.dispose();
-        }
-        for (TextureAtlas textureAtlas : spriteAnimations.values()) {
             textureAtlas.dispose();
         }
         for (TextureAtlas textureAtlas : spriterAtlas.values()) {

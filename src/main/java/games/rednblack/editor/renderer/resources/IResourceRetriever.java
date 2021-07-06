@@ -16,17 +16,15 @@ import games.rednblack.editor.renderer.data.SceneVO;
  * @author Created by azakhary on 9/9/2014.
  */
 public interface IResourceRetriever {
-    TextureAtlas getMainPack();
-
     TextureRegion getTextureRegion(String name, int index);
+
+    TextureAtlas getTextureAtlas(String atlasName);
 
     TextureRegion getAtlasImagesTextureRegion(String atlasName, String name, int index);
 
     boolean hasTextureRegion(String name);
 
     ParticleEffect getParticleEffect(String name);
-
-    TextureAtlas getSkeletonAtlas(String name);
 
     FileHandle getSkeletonJSON(String name);
 
@@ -38,7 +36,7 @@ public interface IResourceRetriever {
 
     TextureAtlas getSpriterAtlas(String name);
 
-    TextureAtlas getSpriteAnimation(String name);
+    Array<TextureAtlas.AtlasRegion> getSpriteAnimation(String name);
 
     BitmapFont getBitmapFont(String name, int size);
 
