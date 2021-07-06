@@ -95,16 +95,6 @@ public class PhysicsBodyLoader {
         return body;
     }
 
-    private void createChainShape(Body body, FixtureDef fixtureDef, Vector2[][] minPolygonData) {
-        Vector2[] vertices = PolygonUtils.mergeTouchingPolygonsToOne(minPolygonData);
-        ChainShape chainShape = new ChainShape();
-        chainShape.createChain(vertices);
-
-        fixtureDef.shape = chainShape;
-        body.createFixture(fixtureDef);
-        chainShape.dispose();
-    }
-
     /**
      * Creates the sensors and attaches them to the body.
      *
@@ -151,6 +141,16 @@ public class PhysicsBodyLoader {
         }
     }
 
+    private void createChainShape(Body body, FixtureDef fixtureDef, Vector2[][] minPolygonData) {
+        Vector2[] vertices = PolygonUtils.mergeTouchingPolygonsToOne(minPolygonData);
+        ChainShape chainShape = new ChainShape();
+        chainShape.createChain(vertices);
+
+        fixtureDef.shape = chainShape;
+        body.createFixture(fixtureDef);
+        chainShape.dispose();
+    }
+
     private void createPolygonShape(Body body, FixtureDef fixtureDef, TransformComponent transformComponent, PhysicsBodyComponent physicsComponent, Vector2[][] minPolygonData) {
         float scaleX = transformComponent.scaleX * (transformComponent.flipX ? -1 : 1);
         float scaleY = transformComponent.scaleY * (transformComponent.flipY ? -1 : 1);
@@ -172,8 +172,8 @@ public class PhysicsBodyLoader {
 
                 minPolygonDatum[j / 2].x = tempX;
                 minPolygonDatum[j / 2].y = tempY;
-
             }
+
             fixtureDef.shape = tmpShape;
             tmpShape.set(verts);
             body.createFixture(fixtureDef).setUserData(new LightData(physicsComponent.height));

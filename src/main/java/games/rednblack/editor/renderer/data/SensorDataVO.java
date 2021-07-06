@@ -4,15 +4,15 @@ import games.rednblack.editor.renderer.components.physics.SensorComponent;
 
 /**
  * The data transfer object for the sensors.
- *
+ * 
  * @author Jan-Thierry Wegener
  */
 public class SensorDataVO {
 
-    public boolean bottom;
-    public boolean left;
-    public boolean right;
-    public boolean top;
+	public boolean bottom;
+	public boolean left;
+	public boolean right;
+	public boolean top;
 
     public float bottomSpanPercent;
     public float leftSpanPercent;

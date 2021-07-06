@@ -64,12 +64,12 @@ public class TransformMathUtils {
                 final float originX = transform.originX;
                 final float originY = transform.originY;
 
-                parentCoords.x = (parentCoords.x - childX - originX) / scaleX + originX;
-                parentCoords.y = (parentCoords.y - childY - originY) / scaleY + originY;
-            }
-        } else {
-            final float cos = (float) Math.cos(rotation * MathUtils.degreesToRadians);
-            final float sin = (float) Math.sin(rotation * MathUtils.degreesToRadians);
+				parentCoords.x = (parentCoords.x - childX - originX) / scaleX + originX;
+				parentCoords.y = (parentCoords.y - childY - originY) / scaleY + originY;
+			}
+		} else {
+			final float cos = MathUtils.cosDeg(rotation);
+			final float sin = MathUtils.sinDeg(rotation);
 
             final float originX = transform.originX;
             final float originY = transform.originY;
@@ -81,12 +81,32 @@ public class TransformMathUtils {
         return parentCoords;
     }
 
-    /**
-     * Transforms the specified point in the entity's coordinates to be in the scene's coordinates.
-     */
-    public static Vector2 localToSceneCoordinates(Entity entity, Vector2 localCoords) {
-        return localToAscendantCoordinates(null, entity, localCoords);
-    }
+	/** Transforms the specified point array in the entity's coordinates to be in the scene's coordinates.*/
+	public static Vector2[] localToSceneCoordinates (Entity entity, Vector2[] localCoords) {
+		return localToAscendantCoordinates(null, entity, localCoords);
+	}
+
+	/** Converts coordinates for this entity to those of a parent entity. The ascendant does not need to be a direct parent. */
+	public static Vector2[] localToAscendantCoordinates (Entity ascendant, Entity entity, Vector2[] localCoords) {
+		while (entity != null) {
+			for (int i = 0; i < localCoords.length; i++) {
+				localToParentCoordinates(entity, localCoords[i]);
+			}
+
+			ParentNodeComponent parentNode = ComponentRetriever.get(entity, ParentNodeComponent.class);
+			if(parentNode == null){
+				break;
+			}
+			entity = parentNode.parentEntity;
+			if (entity == ascendant) break;
+		}
+		return localCoords;
+	}
+
+	/** Transforms the specified point in the entity's coordinates to be in the scene's coordinates.*/
+	public static Vector2 localToSceneCoordinates (Entity entity, Vector2 localCoords) {
+		return localToAscendantCoordinates(null, entity, localCoords);
+	}
 
     /**
      * Converts coordinates for this entity to those of a parent entity. The ascendant does not need to be a direct parent.
@@ -110,33 +130,33 @@ public class TransformMathUtils {
     public static Vector2 localToParentCoordinates(Entity entity, Vector2 localCoords) {
         TransformComponent transform = ComponentRetriever.get(entity, TransformComponent.class);
 
-        final float rotation = -transform.rotation;
-        final float scaleX = transform.scaleX * (transform.flipX ? -1 : 1);
-        final float scaleY = transform.scaleY * (transform.flipY ? -1 : 1);
-        final float x = transform.x;
-        final float y = transform.y;
-        if (rotation == 0) {
-            if (scaleX == 1 && scaleY == 1) {
-                localCoords.x += x;
-                localCoords.y += y;
-            } else {
-                final float originX = transform.originX;
-                final float originY = transform.originY;
-                localCoords.x = (localCoords.x - originX) * scaleX + originX + x;
-                localCoords.y = (localCoords.y - originY) * scaleY + originY + y;
-            }
-        } else {
-            final float cos = (float) Math.cos(rotation * MathUtils.degreesToRadians);
-            final float sin = (float) Math.sin(rotation * MathUtils.degreesToRadians);
-            final float originX = transform.originX;
-            final float originY = transform.originY;
-            final float tox = (localCoords.x - originX) * scaleX;
-            final float toy = (localCoords.y - originY) * scaleY;
-            localCoords.x = (tox * cos + toy * sin) + originX + x;
-            localCoords.y = (tox * -sin + toy * cos) + originY + y;
-        }
-        return localCoords;
-    }
+		final float rotation = -transform.rotation;
+		final float scaleX = transform.scaleX * (transform.flipX ? -1 : 1);
+		final float scaleY = transform.scaleY * (transform.flipY ? -1 : 1);
+		final float x = transform.x;
+		final float y = transform.y;
+		if (rotation == 0) {
+			if (scaleX == 1 && scaleY == 1) {
+				localCoords.x += x;
+				localCoords.y += y;
+			} else {
+				final float originX = transform.originX;
+				final float originY = transform.originY;
+				localCoords.x = (localCoords.x - originX) * scaleX + originX + x;
+				localCoords.y = (localCoords.y - originY) * scaleY + originY + y;
+			}
+		} else {
+			final float cos = MathUtils.cosDeg(rotation);
+			final float sin = MathUtils.sinDeg(rotation);
+			final float originX = transform.originX;
+			final float originY = transform.originY;
+			final float tox = (localCoords.x - originX) * scaleX;
+			final float toy = (localCoords.y - originY) * scaleY;
+			localCoords.x = (tox * cos + toy * sin) + originX + x;
+			localCoords.y = (tox * -sin + toy * cos) + originY + y;
+		}
+		return localCoords;
+	}
 
     public static Matrix3 transform(TransformComponent transformComponent) {
         float translationX = transformComponent.x + transformComponent.originX;

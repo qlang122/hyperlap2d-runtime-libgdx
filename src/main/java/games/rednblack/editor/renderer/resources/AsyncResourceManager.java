@@ -15,8 +15,6 @@ import games.rednblack.editor.renderer.data.SpriterVO;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
 
 public class AsyncResourceManager extends ResourceManager {
 
@@ -29,8 +27,12 @@ public class AsyncResourceManager extends ResourceManager {
         this.projectVO = vo;
     }
 
-    public void setMainPack(TextureAtlas mainPack) {
-        this.mainPack = mainPack;
+    public HashSet<String> getSpineAnimNamesToLoad() {
+        return this.spineAnimNamesToLoad;
+    }
+
+    public void addAtlasPack(String name, TextureAtlas pack) {
+        this.atlasesPack.put(name, pack);
     }
 
     @Override
@@ -65,31 +67,13 @@ public class AsyncResourceManager extends ResourceManager {
         throw new GdxRuntimeException("see loadSpineAnimation(AssetManager, String)");
     }
 
-    public HashSet<String> getSpineAnimNamesToLoad() {
-        return this.spineAnimNamesToLoad;
-    }
-
     public void loadSpineAnimations(AssetManager manager) {
-        Iterator it = skeletonAtlases.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
-            if (spineAnimNamesToLoad.contains(pairs.getKey())) {
-                spineAnimNamesToLoad.remove(pairs.getKey());
-            } else {
-                it.remove();
-                skeletonJSON.remove(pairs.getKey());
-            }
-        }
-
         for (String name : spineAnimNamesToLoad) {
             loadSpineAnimation(manager, name);
         }
     }
 
     public void loadSpineAnimation(AssetManager manager, String name) {
-        FileHandle packFile = Gdx.files.internal(packResolutionName + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".atlas");
-        TextureAtlas animAtlas = manager.get(packFile.path(), TextureAtlas.class);
-        skeletonAtlases.put(name, animAtlas);
         skeletonJSON.put(name, Gdx.files.internal("orig" + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".json"));
     }
 

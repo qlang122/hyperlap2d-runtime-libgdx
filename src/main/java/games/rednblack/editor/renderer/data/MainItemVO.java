@@ -1,14 +1,14 @@
 package games.rednblack.editor.renderer.data;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 import com.badlogic.ashley.core.Entity;
 
 import games.rednblack.editor.renderer.components.*;
 import games.rednblack.editor.renderer.components.light.LightBodyComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
 import games.rednblack.editor.renderer.components.physics.SensorComponent;
-
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class MainItemVO {
     public enum RenderingLayer {SCREEN, SCREEN_READING}

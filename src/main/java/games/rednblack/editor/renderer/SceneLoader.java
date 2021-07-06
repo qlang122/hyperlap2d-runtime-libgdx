@@ -2,7 +2,6 @@ package games.rednblack.editor.renderer;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -44,6 +43,7 @@ import games.rednblack.editor.renderer.utils.DefaultShaders;
  * root actor of scene and load scenes.
  */
 public class SceneLoader {
+    public static final int BATCH_VERTICES_SIZE = 2000;
 
     private String curResolution = "orig";
     private SceneVO sceneVO;
@@ -145,7 +145,7 @@ public class SceneLoader {
         ActionSystem actionSystem = new ActionSystem();
         BoundingBoxSystem boundingBoxSystem = new BoundingBoxSystem();
         CullingSystem cullingSystem = new CullingSystem();
-        renderer = new HyperLap2dRenderer(new CpuPolygonSpriteBatch(2000, createDefaultShader()));
+        renderer = new HyperLap2dRenderer(new CpuPolygonSpriteBatch(BATCH_VERTICES_SIZE, createDefaultShader()));
         renderer.setRayHandler(rayHandler);
 
         engine.addSystem(animationSystem);
@@ -176,8 +176,8 @@ public class SceneLoader {
         engine.addEntityListener(new EntityListener() {
             @Override
             public void entityAdded(Entity entity) {
-                // call init for a system
-                ScriptComponent scriptComponent = entity.getComponent(ScriptComponent.class);
+                // Check if there are scripts to entity and call init that
+                ScriptComponent scriptComponent = ComponentRetriever.get(entity, ScriptComponent.class);
                 if (scriptComponent != null) {
                     for (IScript script : scriptComponent.scripts) {
                         script.init(entity);
@@ -257,7 +257,7 @@ public class SceneLoader {
         engine.removeAllEntities();
         entityFactory.clean();
         //Update the engine to ensure that all pending operations are completed!!
-        engine.update(Gdx.graphics.getDeltaTime());
+        engine.update(0);
 
         pixelsPerWU = rm.getProjectVO().pixelToWorld;
         renderer.setPixelsPerWU(pixelsPerWU);

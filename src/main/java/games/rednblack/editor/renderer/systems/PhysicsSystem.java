@@ -121,7 +121,6 @@ public class PhysicsSystem extends IteratingSystem implements ContactListener {
     protected void processBody(Entity entity) {
         PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
         PolygonComponent polygonComponent = ComponentRetriever.get(entity, PolygonComponent.class);
-
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
 
         if (polygonComponent == null && physicsBodyComponent.body != null) {

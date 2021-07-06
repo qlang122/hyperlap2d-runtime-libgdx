@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Pool;
 /**
  * Created by CyberJoe on 6/19/2015.
  */
-public abstract class BasicScript implements IScript {
+public abstract class BasicScript implements IScript, Pool.Poolable {
     private Pool pool;
     protected Entity entity;
 
@@ -19,6 +19,7 @@ public abstract class BasicScript implements IScript {
         return entity;
     }
 
+    @Override
     public void reset() {
         pool = null;
         entity = null;
