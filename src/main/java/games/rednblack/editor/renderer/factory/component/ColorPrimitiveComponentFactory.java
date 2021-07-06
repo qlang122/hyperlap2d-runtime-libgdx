@@ -25,6 +25,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
+
 import games.rednblack.editor.renderer.box2dLight.RayHandler;
 import games.rednblack.editor.renderer.components.DimensionsComponent;
 import games.rednblack.editor.renderer.components.PolygonComponent;
@@ -71,7 +72,7 @@ public class ColorPrimitiveComponentFactory extends ComponentFactory {
     protected TextureRegionComponent createTextureRegionComponent(Entity entity, MainItemVO vo) {
         TextureRegionComponent component = engine.createComponent(TextureRegionComponent.class);
 
-        component.region = rm.getTextureRegion("white-pixel");
+        component.region = rm.getTextureRegion("white-pixel", -1);
         component.isRepeat = false;
         component.isPolygon = true;
         entity.add(component);
