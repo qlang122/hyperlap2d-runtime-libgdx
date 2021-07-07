@@ -18,9 +18,6 @@
 
 package games.rednblack.editor.renderer.factory.component;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
@@ -199,31 +196,6 @@ public abstract class ComponentFactory {
 
         createPhysicsBodyPropertiesComponent(entity, vo);
     }
-    
-    /**
-     * Creats the sensor component and adds it to the entity.
-     * 
-     * @param entity The entity to add the component to.
-     * @param vo The data transfer object to create the component from.
-     */
-    protected void createSensorComponent(Entity entity, MainItemVO vo) {
-    	if (vo.sensor == null) {
-    		return;
-    	}
-    	
-    	SensorComponent sensorComponent = engine.createComponent(SensorComponent.class);
-    	sensorComponent.bottom = vo.sensor.bottom;
-    	sensorComponent.left = vo.sensor.left;
-    	sensorComponent.right = vo.sensor.right;
-    	sensorComponent.top = vo.sensor.top;
-
-    	sensorComponent.bottomSpanPercent = vo.sensor.bottomSpanPercent;
-    	sensorComponent.leftSpanPercent = vo.sensor.leftSpanPercent;
-    	sensorComponent.rightSpanPercent = vo.sensor.rightSpanPercent;
-    	sensorComponent.topSpanPercent = vo.sensor.topSpanPercent;
-    	
-    	entity.add(sensorComponent);
-    }
 
     /**
      * Creats the sensor component and adds it to the entity.
@@ -241,6 +213,11 @@ public abstract class ComponentFactory {
         sensorComponent.left = vo.sensor.left;
         sensorComponent.right = vo.sensor.right;
         sensorComponent.top = vo.sensor.top;
+
+        sensorComponent.bottomSpanPercent = vo.sensor.bottomSpanPercent;
+        sensorComponent.leftSpanPercent = vo.sensor.leftSpanPercent;
+        sensorComponent.rightSpanPercent = vo.sensor.rightSpanPercent;
+        sensorComponent.topSpanPercent = vo.sensor.topSpanPercent;
 
         entity.add(sensorComponent);
     }
