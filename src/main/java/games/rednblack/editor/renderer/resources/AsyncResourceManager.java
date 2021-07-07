@@ -72,15 +72,6 @@ public class AsyncResourceManager extends ResourceManager {
         skeletonJSON.put(name, Gdx.files.internal("orig" + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".json"));
     }
 
-    /**
-     * Sprite Animations
-     */
-
-    @Override
-    public void loadSpriteAnimations() {
-        throw new GdxRuntimeException("see loadSpriteAnimations(AssetManager)");
-    }
-
     @Override
     public void loadSpriterAnimations() {
         throw new GdxRuntimeException("see loadSpriterAnimations(AssetManager)");
@@ -122,10 +113,5 @@ public class AsyncResourceManager extends ResourceManager {
                 spriterExtraSCML.put(name, files);
             }
         }
-    }
-
-    @Override
-    public void loadParticleEffects() {
-        throw new GdxRuntimeException("see loadParticleEffects(AssetManager)");
     }
 }

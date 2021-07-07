@@ -68,14 +68,14 @@ public class SimpleImageComponentFactory extends ComponentFactory {
     protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
         DimensionsComponent component = engine.createComponent(DimensionsComponent.class);
 
-        TextureRegionComponent textureRegionComponent = ComponentRetriever.get(entity, TextureRegionComponent.class);
+        TextureRegionComponent texture = ComponentRetriever.get(entity, TextureRegionComponent.class);
 
         ResolutionEntryVO resolutionEntryVO = rm.getLoadedResolution();
         ProjectInfoVO projectInfoVO = rm.getProjectVO();
         float multiplier = resolutionEntryVO.getMultiplier(rm.getProjectVO().originalResolution);
 
-        component.width = (float) textureRegionComponent.region.getRegionWidth() * multiplier / projectInfoVO.pixelToWorld;
-        component.height = (float) textureRegionComponent.region.getRegionHeight() * multiplier / projectInfoVO.pixelToWorld;
+        component.width = (texture.region == null) ? 0 : (float) texture.region.getRegionWidth() * multiplier / projectInfoVO.pixelToWorld;
+        component.height = (texture.region == null) ? 0 : (float) texture.region.getRegionHeight() * multiplier / projectInfoVO.pixelToWorld;
         entity.add(component);
 
         return component;

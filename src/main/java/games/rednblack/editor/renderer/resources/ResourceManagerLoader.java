@@ -130,7 +130,7 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<AsyncResource
             FileHandle res = Gdx.files.internal(this.asyncResourceManager.packResolutionName + File.separator + this.asyncResourceManager.spriterAnimationsPath + File.separator + name + File.separator + name + ".atlas");
             deps.add(new AssetDescriptor(res, TextureAtlas.class));
         }
-        
+
         return deps;
     }
 
