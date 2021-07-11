@@ -104,6 +104,7 @@ public class PhysicsSystem extends IteratingSystem implements ContactListener {
 
         transformComponent.x = bodyPosition.x * alpha + transformComponent.x * (1.0f - alpha);
         transformComponent.y = bodyPosition.y * alpha + transformComponent.y * (1.0f - alpha);
+        System.out.println("--8-->>" + transformComponent.x + " " + transformComponent.y);
 
         float cs = (1.0f - alpha) * MathUtils.cosDeg(angle) + alpha * MathUtils.cos(bodyAngle);
         float sn = (1.0f - alpha) * MathUtils.sinDeg(angle) + alpha * MathUtils.sin(bodyAngle);

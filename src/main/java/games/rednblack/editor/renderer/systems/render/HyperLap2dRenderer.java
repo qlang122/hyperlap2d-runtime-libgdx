@@ -362,6 +362,7 @@ public class HyperLap2dRenderer extends IteratingSystem {
 
                 TransformComponent childTransformComponent = transformMapper.get(child);
                 float cx = childTransformComponent.x, cy = childTransformComponent.y;
+                System.out.println("--9-->>" + cx + " " + cy + " " + offsetX + " " + offsetY);
                 childTransformComponent.x = cx + offsetX;
                 childTransformComponent.y = cy + offsetY;
 
