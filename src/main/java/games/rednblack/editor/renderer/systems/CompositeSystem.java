@@ -99,7 +99,6 @@ public class CompositeSystem extends IteratingSystem {
         for (Entity entity : entities) {
             if (lowerX == 0 && lowerY == 0) break;
             TransformComponent transformComponent = transformMapper.get(entity);
-            System.out.println("--7-->>" + transformComponent.x + " " + transformComponent.y + " " + lowerX + " " + lowerY);
             transformComponent.x -= lowerX;
             transformComponent.y -= lowerY;
         }

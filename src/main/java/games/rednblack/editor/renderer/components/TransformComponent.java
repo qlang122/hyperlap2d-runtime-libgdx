@@ -26,7 +26,6 @@ public class TransformComponent implements BaseComponent {
     }
 
     public TransformComponent(TransformComponent component) {
-        System.out.println("--1-->>" + component.x + " " + component.y);
         x = component.x;
         y = component.y;
         scaleX = component.scaleX;
@@ -48,7 +47,6 @@ public class TransformComponent implements BaseComponent {
     public void disableTransform() {
         if (backup != null) return;
         backup = new TransformComponent(this);
-        System.out.println("--2-->>");
         x = 0;
         y = 0;
         scaleX = 1f;
@@ -61,7 +59,6 @@ public class TransformComponent implements BaseComponent {
 
     public void enableTransform() {
         if (backup == null) return;
-        System.out.println("--3-->>" + backup.x + " " + backup.y);
         x = backup.x;
         y = backup.y;
         scaleX = backup.scaleX;

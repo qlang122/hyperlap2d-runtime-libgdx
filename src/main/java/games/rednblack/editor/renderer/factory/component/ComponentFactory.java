@@ -128,7 +128,6 @@ public abstract class ComponentFactory {
         component.rotation = vo.rotation;
         component.scaleX = vo.scaleX;
         component.scaleY = vo.scaleY;
-        System.out.println("--4-->>" + component.x + " " + component.y);
         component.x = vo.x;
         component.y = vo.y;
         component.isXYScaleLinked = vo.scaleXYLink;

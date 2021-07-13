@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 import games.rednblack.editor.renderer.components.*;
 import games.rednblack.editor.renderer.utils.TransformMathUtils;
@@ -52,7 +51,6 @@ public class BoundingBoxSystem extends IteratingSystem {
             Rectangle rectangle = d.polygon.getBoundingRectangle();
             d.width = rectangle.width;
             d.height = rectangle.height;
-            System.out.println("--5-->>" + rectangle.x + " " + rectangle.y);
             t.x += rectangle.x;
             t.y += rectangle.y;
         }
@@ -73,7 +71,6 @@ public class BoundingBoxSystem extends IteratingSystem {
         if (d.polygon != null) {
             d.width = originalWidth;
             d.height = originalHeight;
-            System.out.println("--6-->>" + originalX + " " + originalY);
             t.x = originalX;
             t.y = originalY;
         }
