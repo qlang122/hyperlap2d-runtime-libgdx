@@ -24,6 +24,31 @@ public class DimensionsComponent implements BaseComponent {
         }
     }
 
+    public boolean isOverlap(Polygon target) {
+        if (polygon != null) {
+            for (int i = 0; i < polygon.getVertices().length; i += 2) {
+                if (target.contains(polygon.getVertices()[i], polygon.getVertices()[i + 1])) {
+                    return true;
+                }
+            }
+            for (int i = 0; i < target.getVertices().length; i += 2) {
+                if (polygon.contains(target.getVertices()[i], target.getVertices()[i + 1])) {
+                    return true;
+                }
+            }
+        } else if (boundBox != null) {
+            if (target.contains(boundBox.x, boundBox.y)) return true;
+            if (target.contains(boundBox.x + boundBox.width, boundBox.y)) return true;
+            if (target.contains(boundBox.x, boundBox.y + boundBox.height)) return true;
+            if (target.contains(boundBox.x + boundBox.width, boundBox.y + boundBox.height))
+                return true;
+        } else {
+            return target.contains(0, 0) || target.contains(width, 0) ||
+                    target.contains(0, height) || target.contains(width, height);
+        }
+        return false;
+    }
+
     public void setPolygon(PolygonComponent polygonComponent) {
         Vector2[] verticesArray = PolygonUtils.mergeTouchingPolygonsToOne(polygonComponent.vertices);
         float[] vertices = new float[verticesArray.length * 2];
