@@ -25,6 +25,7 @@ public class DimensionsComponent implements BaseComponent {
     }
 
     public boolean isOverlap(Polygon target) {
+        if (target == null) return false;
         if (polygon != null) {
             for (int i = 0; i < polygon.getVertices().length; i += 2) {
                 if (target.contains(polygon.getVertices()[i], polygon.getVertices()[i + 1])) {
