@@ -24,12 +24,12 @@ public class SceneVO {
 
     }
 
-	@Override
-	public String toString () {
-		return sceneName;
-	}
+    @Override
+    public String toString() {
+        return sceneName;
+    }
 
-	public SceneVO(SceneVO vo) {
+    public SceneVO(SceneVO vo) {
         sceneName = new String(vo.sceneName);
         composite = new CompositeVO(vo.composite);
         physicsPropertiesVO = new PhysicsPropertiesVO(vo.physicsPropertiesVO);
@@ -40,7 +40,7 @@ public class SceneVO {
         String str = "";
         Json json = new Json();
         json.setOutputType(OutputType.json);
-        str = json.toJson(this);
+        str = json.prettyPrint(this).replace("\t", "  ");
         return str;
     }
 }

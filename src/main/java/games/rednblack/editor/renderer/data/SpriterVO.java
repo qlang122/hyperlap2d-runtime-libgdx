@@ -55,8 +55,7 @@ public class SpriterVO extends MainItemVO {
         String str = "";
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
-        str = json.toJson(this);
-        json.prettyPrint(str);
+        str = json.prettyPrint(this).replace("\t", "  ");
         return str;
     }
 
